@@ -1,8 +1,4 @@
-Massage Booking App
-
-Laravel 10 
-
-=============================================Cách chạy =================================================================== 
+Massage Booking App 
 
 1.Clone Project về từ link git: https://github.com/kimbaoksqp123/Massage_App.git
 2.Cd đến thư mục chứa dự án 
@@ -16,13 +12,17 @@ Laravel 10
 4.Generate Key
     -> Chạy : php artisan key:generate
 
-5. Chạy migration 
+5.Chạy migration 
+
 -Mở XAMPP -> tạo database với tên massage_booking
+    
     -> Chạy : php artisan migrate
 
-6. Run project
+6.Run project
+    
+    
     ->Chạy : php artisan serve
 
-==============================================================================================================================
+
 
 
