@@ -11,6 +11,7 @@ Massage Booking App
 -Mở tệp .env và cấu hình các thông số như cơ sở dữ liệu, cài đặt mail, và các thiết lập khác dựa trên yêu cầu của dự án.
 
 4.Generate Key
+
     php artisan key:generate
 
 5.Chạy migration 
