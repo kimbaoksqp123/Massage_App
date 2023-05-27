@@ -1,4 +1,4 @@
-Massage Booking App 
+Massage Booking WEB 
 
 1.Clone Project về từ link git: https://github.com/kimbaoksqp123/Massage_App.git
 
