@@ -20,20 +20,21 @@ Massage Booking WEB
     
     php artisan migrate
 
-6. Tạo dữ liệu mẫu:
+6.Tạo dữ liệu mẫu:
 
 -Mở Terminal chạy lệnh:
     
- ```c
+
  php artisan migrate:fresh --seed
- ```
+
 
 7.Run project
     
     
     php artisan serve
 
-8. Lưu ý:
+8.Lưu ý:
+
 - Ảnh các quán massage lưu ở mục public/img:
     VD: img_0X_0Y.jpg => Ảnh thứ Y của quán thứ X
 - Ảnh dịch vụ của quán massage lưu ở mục public/img/img_service
