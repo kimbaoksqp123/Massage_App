@@ -1,0 +1,27 @@
+.page-header {
+    display: flex;
+    flex-direction: column;
+    $padding: 50px;
+    width: calc(100% - 2 * $padding);
+    margin: 0;
+    // height: calc(100% - 2 * $padding);
+    padding: $padding;
+    position: relative;
+    top: 0;
+    background: gray;
+
+    .header-control {
+        display: flex;
+        flex-direction: row;
+        flex: 1;
+        .role-show {
+            flex: 1;
+        }
+        .header-open {
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+}
