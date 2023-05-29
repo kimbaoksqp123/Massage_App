@@ -25,7 +25,7 @@ Massage Booking WEB
 -Mở Terminal chạy lệnh:
     
 
- php artisan migrate:fresh --seed
+    php artisan migrate:fresh --seed
 
 
 7.Run project
