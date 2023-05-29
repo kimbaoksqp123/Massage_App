@@ -12,7 +12,7 @@ class ImageLibrary extends Model
     protected $primaryKey = 'id'; 
     public $timestamps = false;
     protected $fillable = [
-        'ficilityID',
+        'facilityID',
         'imageURL',
         
     ];

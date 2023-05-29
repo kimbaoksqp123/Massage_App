@@ -12,7 +12,7 @@ class MassageService extends Model
     protected $primaryKey = 'id'; 
     public $timestamps = false;
     protected $fillable = [
-        'ficilityID',
+        'facilityID',
         'serviceName',
         'serviceDescription',
         'price',

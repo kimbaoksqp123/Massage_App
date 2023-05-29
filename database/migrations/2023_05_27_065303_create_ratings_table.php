@@ -23,7 +23,6 @@ return new class extends Migration
                 ->references('id')
                 ->on('massage_facilitys')
                 ->onDelete('cascade');
-            $table->string('phoneNumber');
             $table->string('comment'); 
             $table->integer('commentVoteup'); 
             $table->timestamps();
