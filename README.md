@@ -23,8 +23,9 @@ Massage Booking WEB
 6. Tạo dữ liệu mẫu:
 -Mở Terminal chạy lệnh:
     
-    
-    php artisan migrate:fresh --seed
+ ```c
+ php artisan migrate:fresh --seed
+ ```
 
 7.Run project
     
