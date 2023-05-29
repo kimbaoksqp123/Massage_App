@@ -14,7 +14,6 @@ class Rating extends Model
     protected $fillable = [
         'userID',
         'facilityID',
-        'phoneNumber',
         'comment',
         'commentVoteup',
         'created_at',
