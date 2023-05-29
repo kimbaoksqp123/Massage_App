@@ -31,6 +31,12 @@ Massage Booking WEB
     
     php artisan serve
 
+8. Lưu ý:
+- Ảnh các quán massage lưu ở mục public/img:
+    VD: img_0X_0Y.jpg => Ảnh thứ Y của quán thứ X
+- Ảnh dịch vụ của quán massage lưu ở mục public/img/img_service
+    VD: img_service_0X_0Y.jpg => Ảnh dịch vụ thứ Y của quán thứ X
+
 
 
 
