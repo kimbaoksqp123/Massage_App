@@ -21,6 +21,7 @@ Massage Booking WEB
     php artisan migrate
 
 6. Tạo dữ liệu mẫu:
+
 -Mở Terminal chạy lệnh:
     
  ```c
