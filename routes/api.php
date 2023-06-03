@@ -19,8 +19,12 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::get('/massage-facilities', [MassageFacilityController::class, 'index'])
+Route::prefix('massage-facilities')->group(function() {
+    Route::get('/', [MassageFacilityController::class, 'index'])
     ->name('massage-facilities.show');
 
-Route::post('/massage-facilities/filter', [MassageFacilityController::class, 'filter'])
+    Route::post('/filter', [MassageFacilityController::class, 'filter'])
     ->name('massage-facilities.filter');
+
+    Route::get('/detail/{id}', [MassageFacilityController::class, 'detail'])->name('massage-facilities.detail');
+});
