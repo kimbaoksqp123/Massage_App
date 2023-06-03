@@ -74,7 +74,7 @@ class MassageFacilitySeeder extends Seeder
             [
                 'id' => 5,
                 'ownerId' => 5,
-                'name' => 'Omamori Spa Hà Nội',
+                'name' => 'Omamori Spa Ha Noi',
                 'description'=>'オマモリ スパは、2013 年に設立されたブラインドリンクによって設立および運営されているマッサージ センターのチェーンです。ブラインドリンクは、ベトナムの視覚障害者コミュニティ全般にウェルネスの分野でトレーニングの機会を提供する、社会的影響を与える先駆的な組織です。 BlindLink の目的は、この価値ある市民のグループにより良い生活水準とより高い自尊心を生み出すことです。',
                 'location' => '48 Ngo Huyen , Old Quarter , Ha Noi , Vietnam',
                 'imageURL' => 'img/img_05_01.jpg',
