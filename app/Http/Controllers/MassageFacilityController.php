@@ -31,26 +31,30 @@ class MassageFacilityController extends Controller
         
         // name, address
         if ($input) {
-
-            $inputWithSpaces = trim($input);
-            $inputWithoutSpaces = preg_replace('/\s+/', '', $input);
             
             $nameWithoutSpaces = "REPLACE(REPLACE(REPLACE(name, ' ', ''), '\t', ''), '\n', '')";
             $locationWithoutSpaces = "REPLACE(REPLACE(REPLACE(location, ' ', ''), '\t', ''), '\n', '')";
 
             $subQuery = MassageFacility::selectRaw("
-                id,
+                id as sub_query_id,
                 $nameWithoutSpaces as nameWithoutSpaces,
                 $locationWithoutSpaces as locationWithoutSpaces
             ");
 
-            $query->joinSub($subQuery, 'sub_query', function (JoinClause $join) {
-                $join->on('massage_facilitys.id', '=', 'sub_query.id');
-            })
-                ->whereRaw("TRIM(name) LIKE ?", ['%' . $inputWithSpaces . '%'])
-                ->orWhereRaw("TRIM(location) LIKE ?", ['%' . $inputWithSpaces . '%'])
-                ->orWhereRaw("nameWithoutSpaces LIKE ?", ['%' . $inputWithoutSpaces . '%'])
-                ->orWhereRaw("locationWithoutSpaces LIKE ?", ['%' . $inputWithoutSpaces . '%']);
+            $query->joinSub($subQuery, 'sub_query', 
+                function (JoinClause $join) {
+                    $join->on('id', '=', 'sub_query_id');
+                })
+                ->where(function (Builder $query) use ($input) {
+
+                    $inputWithSpaces = trim($input);
+                    $inputWithoutSpaces = preg_replace('/\s+/', '', $input);
+
+                    $query->whereRaw("TRIM(name) LIKE ?", ['%' . $inputWithSpaces . '%'])
+                        ->orWhereRaw("TRIM(location) LIKE ?", ['%' . $inputWithSpaces . '%'])
+                        ->orWhereRaw("nameWithoutSpaces LIKE ?", ['%' . $inputWithoutSpaces . '%'])
+                        ->orWhereRaw("locationWithoutSpaces LIKE ?", ['%' . $inputWithoutSpaces . '%']);
+                });
         }
 
         // massage service
@@ -72,6 +76,7 @@ class MassageFacilityController extends Controller
             $query->where('averageRating','>=',$minRate ) -> where('averageRating','<=',$maxRate ) ;
         }
 
+        // dd($query);
         return MassageFacilityResource::collection($query->get());
     }
 
