@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MassageFacilityResource;
 use App\Models\MassageFacility;
+use App\Models\MassageService;
 use Illuminate\Http\Request;
 
 class MassageFacilityController extends Controller
@@ -37,7 +38,8 @@ class MassageFacilityController extends Controller
 
         // price
         if ($minPrice && $maxPrice) {
-
+            $facilitySearchIds = MassageService::where('price', '>=', $minPrice)->where('price', '<=', $maxPrice)->pluck('id')->toArray();
+            $query->whereIn('id', $facilitySearchIds);
         }
 
         // rate
@@ -46,5 +48,9 @@ class MassageFacilityController extends Controller
         }
 
         return MassageFacilityResource::collection($query->get());
+    }
+
+    public function detail($id) {
+        return MassageFacility::find($id);
     }
 }
