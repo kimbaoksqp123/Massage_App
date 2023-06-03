@@ -44,7 +44,7 @@ class MassageFacilityController extends Controller
 
         // rate
         if ($minRate && $maxRate) {
-
+            $query->where('averageRating','>=',$minRate ) -> where('averageRating','<=',$maxRate ) ;
         }
 
         return MassageFacilityResource::collection($query->get());
