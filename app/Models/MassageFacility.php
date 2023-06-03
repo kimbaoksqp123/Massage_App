@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Attribute;
+use Illuminate\Database\Eloquent\Casts\Attribute as CastsAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,6 +25,19 @@ class MassageFacility extends Model
         'averageRating'
         
     ];
+
+    // add custom attribute to array & json
+    protected $appends = ['review_count'];
+
+    // accessors
+    protected function reviewCount(): CastsAttribute {
+
+        return new CastsAttribute(
+            get: fn () => $this->ratings()->count(),
+        );
+    }
+
+    // relationships
     public function user()
     {
         return $this->belongsTo(User::class, 'ownerID', 'id');
