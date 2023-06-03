@@ -14,6 +14,37 @@ class MassageFacilityController extends Controller
     }
 
     public function filter(Request $req) {
-        
+
+        $input = $req->input;
+        $serviceList = $req->serviceList;
+        $minPrice = $req->minPrice;
+        $maxPrice = $req->maxPrice;
+        $minRate = $req->minRate;
+        $maxRate = $req->maxRate;
+
+        $query = MassageFacility::query();
+
+        // name, address
+        if ($input) {
+            $query->where('name', 'like', "%{$input}%")
+                ->orWhere('location', 'like', "%{$input}%");
+        }
+
+        // massage service
+        if ($serviceList && count($serviceList) > 0) {
+            
+        }
+
+        // price
+        if ($minPrice && $maxPrice) {
+
+        }
+
+        // rate
+        if ($minRate && $maxRate) {
+
+        }
+
+        return $query->get();
     }
 }
