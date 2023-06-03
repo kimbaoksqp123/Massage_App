@@ -15,10 +15,10 @@ class MassageService extends Model
         'facilityID',
         'serviceName',
         'serviceDescription',
-        'price',
+        // 'price',
         'availabilityStatus',
         'imageURL',
-        'serviceDuration',               
+        // 'serviceDuration',               
     ];
     public function massage_facility()
     {
@@ -28,6 +28,11 @@ class MassageService extends Model
     public function bookings()
     {
         return $this->hasMany(Booking::class, 'serviceID', 'id');
+    }
+
+    public function service_prices()
+    {
+        return $this->hasMany(ServicePrice::class, 'serviceID', 'id');
     }
 
 }
