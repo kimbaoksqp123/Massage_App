@@ -45,6 +45,6 @@ class MassageFacilityController extends Controller
 
         }
 
-        return $query->get();
+        return MassageFacilityResource::collection($query->get());
     }
 }
