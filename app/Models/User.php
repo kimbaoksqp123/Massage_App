@@ -12,7 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     protected $table = 'users';
-    protected $primaryKey = 'id'; 
+    protected $primaryKey = 'id';
     // public $timestamps = false;
 
     /**
@@ -27,10 +27,11 @@ class User extends Authenticatable
         'phoneNumber',
         'fullname',
         'age',
+        'avatarImageUrl',
         'gender',
         'userType',
         'created_at',
-        'updated_at',         
+        'updated_at',
     ];
 
     /**
@@ -67,5 +68,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Rating::class, 'userID', 'id');
     }
-
 }

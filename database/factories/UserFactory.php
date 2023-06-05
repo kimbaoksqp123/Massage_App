@@ -19,7 +19,7 @@ class UserFactory extends Factory
      * @return array<string, mixed>
      */
 
-     protected $model = User::class;
+    protected $model = User::class;
 
     public function definition(): array
     {
@@ -28,20 +28,19 @@ class UserFactory extends Factory
         return [
             'username' => $fake->userName(),
             'email' => $fake->email(),
-           
             'password' => '12345678@', // password
             'phoneNumber' => $fake->phoneNumber(),
             'fullname' => $fake->name(),
-            'age' =>$fake->numberBetween(18,80),
+            'age' => $fake->numberBetween(18, 80),
             'gender' => $fake->boolean(),
-            'userType' => '0', 
+            'userType' => '0',
 
 
-            
+
         ];
     }
 
-   
+
 
     /**
      * Indicate that the model's email address should be unverified.

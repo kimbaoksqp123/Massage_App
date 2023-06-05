@@ -4,15 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MassageFacilityResource;
+use App\Models\ImageLibrary;
 use App\Models\MassageFacility;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use App\Models\MassageService;
+use App\Models\ServicePrice;
+use App\Models\User;
+use App\Models\Rating;
 use Illuminate\Http\Request;
 
 class MassageFacilityController extends Controller
 {
-    public function index() {
+    public function index()
+    {
 
         $MassageFacilities = MassageFacilityResource::collection(MassageFacility::all());
         $MassageServices = MassageService::pluck('serviceName')->toArray();
@@ -22,16 +27,17 @@ class MassageFacilityController extends Controller
         ];
     }
 
-    public function filter(Request $req) {
+    public function filter(Request $req)
+    {
 
         // instantiate query
         $query = MassageFacility::query();
-        
+
         // name, address
         if ($req->__isset('input')) {
-            
+
             $input = $req->input;
-            
+
             $nameWithoutSpaces = "REPLACE(REPLACE(REPLACE(name, ' ', ''), '\t', ''), '\n', '')";
             $locationWithoutSpaces = "REPLACE(REPLACE(REPLACE(location, ' ', ''), '\t', ''), '\n', '')";
 
@@ -41,10 +47,13 @@ class MassageFacilityController extends Controller
                 $locationWithoutSpaces as locationWithoutSpaces
             ");
 
-            $query->joinSub($subQuery, 'sub_query', 
+            $query->joinSub(
+                $subQuery,
+                'sub_query',
                 function (JoinClause $join) {
                     $join->on('id', '=', 'sub_query_id');
-                })
+                }
+            )
                 ->where(function (Builder $query) use ($input) {
 
                     $inputWithSpaces = trim($input);
@@ -74,23 +83,59 @@ class MassageFacilityController extends Controller
             $minPrice = $req->minPrice;
             $maxPrice = $req->maxPrice;
 
-            $facilitySearchIds = MassageService::where('price', '>=', $minPrice)->where('price', '<=', $maxPrice)->pluck('id')->toArray();
+            $serviceSearchIds = ServicePrice::where('price', '>=', $minPrice)->where('price', '<=', $maxPrice)->pluck('serviceID')->toArray();
+            $facilitySearchIds = MassageService::wherein('id', $serviceSearchIds)->pluck('facilityID')->toArray();
             $query->whereIn('id', $facilitySearchIds);
         }
 
         // rate
         if ($req->__isset('minRate') && $req->__isset('maxRate')) {
-            
+
             $minRate = $req->minRate;
             $maxRate = $req->maxRate;
 
-            $query->where('averageRating','>=',$minRate ) -> where('averageRating','<=',$maxRate ) ;
+            $query->where('averageRating', '>=', $minRate)->where('averageRating', '<=', $maxRate);
         }
 
         return MassageFacilityResource::collection($query->get());
     }
 
-    public function detail($id) {
-        return MassageFacility::find($id);
+    public function detail($id)
+    {
+        $inforFacility = MassageFacility::where('id', '=', $id)
+            ->get(['id', 'name', 'phoneNumber AS phone', 'location AS address', 'description', 'imageURL AS imgMain']);
+
+        //danh sách ảnh của 1 quán
+        $imgList = ImageLibrary::where('facilityID', '=', $id)->pluck('imageURL')->toArray();
+
+        // danh sách các dịch vụ của quán
+        $serviceList = MassageService::where('facilityID', '=', $id)->get(['id', 'serviceName', 'serviceDescription']);
+
+        // thêm giá tiền cùng thời gian phục vụ ch cho từng service
+        foreach ($serviceList as $serviceItem) {
+
+            $servicePriceItem = ServicePrice::where('serviceID', '=', $serviceItem->id)
+                ->get(['serviceID', 'id AS priceID', 'price', 'durationTime AS duration']);
+            $serviceItem['servicePrice'] = $servicePriceItem;
+        }
+
+        // TODO: thêm avatar cho user
+        // thêm rating cho quán
+        $rateList = Rating::where('facilityID', '=', $id)->get(['id AS ratingID', 'userID', 'comment', 'commentVoteup AS rate']);
+
+        foreach ($rateList as $rateItem) {
+            $userInfo = User::where('id', '=', $rateItem->userID)->get(['username', 'avatarImageUrl'])->first();
+            $rateItem['username'] = $userInfo['username'];
+            $rateItem['avatarImageUrl'] = $userInfo['avatarImageUrl'];
+        }
+
+        foreach ($inforFacility as $value) {
+
+            $value['imgList'] = $imgList;
+            $value['serviceList'] = $serviceList;
+            $value['ratingList'] = $rateList;
+        }
+
+        return $inforFacility;
     }
 }
