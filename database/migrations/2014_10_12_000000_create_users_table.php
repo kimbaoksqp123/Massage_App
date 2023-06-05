@@ -17,14 +17,15 @@ return new class extends Migration
             $table->string('password');
             $table->string('email')->unique();
             // $table->timestamp('email_verified_at')->nullable();
-       
+
             // $table->rememberToken();
             $table->string('phoneNumber');
             $table->string('fullname');
             $table->integer('age');
+            $table->string('avatarImageUrl')->default('img/img_user/avatar_01.jpg');
             $table->boolean('gender');
             $table->integer('userType');
-            $table->timestamps();          
+            $table->timestamps();
         });
     }
 
