@@ -13,7 +13,13 @@ use Illuminate\Http\Request;
 class MassageFacilityController extends Controller
 {
     public function index() {
-        return MassageFacilityResource::collection(MassageFacility::all());
+
+        $MassageFacilities = MassageFacilityResource::collection(MassageFacility::all());
+        $MassageServices = MassageService::pluck('serviceName')->toArray();
+        return [
+            'result' => $MassageFacilities,
+            'serviceList' => $MassageServices,
+        ];
     }
 
     public function filter(Request $req) {
