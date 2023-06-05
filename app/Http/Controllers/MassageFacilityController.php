@@ -24,19 +24,13 @@ class MassageFacilityController extends Controller
 
     public function filter(Request $req) {
 
-        // get request data
-        $input = $req->input;
-        $serviceList = array($req->serviceList);
-        $minPrice = $req->minPrice;
-        $maxPrice = $req->maxPrice;
-        $minRate = $req->minRate;
-        $maxRate = $req->maxRate;
-
         // instantiate query
         $query = MassageFacility::query();
         
         // name, address
-        if ($input) {
+        if ($req->__isset('input')) {
+            
+            $input = $req->input;
             
             $nameWithoutSpaces = "REPLACE(REPLACE(REPLACE(name, ' ', ''), '\t', ''), '\n', '')";
             $locationWithoutSpaces = "REPLACE(REPLACE(REPLACE(location, ' ', ''), '\t', ''), '\n', '')";
@@ -64,7 +58,10 @@ class MassageFacilityController extends Controller
         }
 
         // massage service
-        if (count($serviceList) > 0 && !empty($serviceList[0]) ) {
+        if ($req->__isset('serviceList')) {
+
+            $serviceList = array($req->serviceList);
+
             $query->with('massage_services')
                 ->whereHas('massage_services', function (Builder $query) use ($serviceList) {
                     $query->whereIn('serviceName', $serviceList);
@@ -72,17 +69,24 @@ class MassageFacilityController extends Controller
         }
 
         // price
-        if ($minPrice && $maxPrice) {
+        if ($req->__isset('minPrice') && $req->__isset('maxPrice')) {
+
+            $minPrice = $req->minPrice;
+            $maxPrice = $req->maxPrice;
+
             $facilitySearchIds = MassageService::where('price', '>=', $minPrice)->where('price', '<=', $maxPrice)->pluck('id')->toArray();
             $query->whereIn('id', $facilitySearchIds);
         }
 
         // rate
-        if ($minRate && $maxRate) {
+        if ($req->__isset('minRate') && $req->__isset('maxRate')) {
+            
+            $minRate = $req->minRate;
+            $maxRate = $req->maxRate;
+
             $query->where('averageRating','>=',$minRate ) -> where('averageRating','<=',$maxRate ) ;
         }
 
-        // dd($query);
         return MassageFacilityResource::collection($query->get());
     }
 
