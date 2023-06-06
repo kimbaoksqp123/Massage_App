@@ -16,6 +16,10 @@ use Illuminate\Http\Request;
 
 class MassageFacilityController extends Controller
 {
+    public $minPriceAllFacility;
+    public $maxPriceAllFacility;
+    public $serviceList = array();
+
     public function index()
     {
 
@@ -85,7 +89,14 @@ class MassageFacilityController extends Controller
 
             $serviceSearchIds = ServicePrice::where('price', '>=', $minPrice)->where('price', '<=', $maxPrice)->pluck('serviceID')->toArray();
             $facilitySearchIds = MassageService::wherein('id', $serviceSearchIds)->pluck('facilityID')->toArray();
+
             $query->whereIn('id', $facilitySearchIds);
+
+            // lấy giá tiền của service rẻ nhất
+            $this->minPriceAllFacility = ServicePrice::whereIn('serviceID', $serviceSearchIds)->orderBy('price', 'asc')->first()->price;
+
+            // lấy giá tiền của service đắt nhất
+            $this->maxPriceAllFacility = ServicePrice::whereIn('serviceID', $serviceSearchIds)->orderBy('price', 'desc')->first()->price;
         }
 
         // rate
@@ -97,7 +108,13 @@ class MassageFacilityController extends Controller
             $query->where('averageRating', '>=', $minRate)->where('averageRating', '<=', $maxRate);
         }
 
-        return MassageFacilityResource::collection($query->get());
+
+        return [
+            'result' => MassageFacilityResource::collection($query->get()),
+            'minPrice' => $this->minPriceAllFacility,
+            'maxPrice' => $this->maxPriceAllFacility,
+            'serviceList' => $this->serviceList,
+        ];
     }
 
     public function detail($id)
