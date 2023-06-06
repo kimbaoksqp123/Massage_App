@@ -22,12 +22,19 @@ class MassageFacilityController extends Controller
 
     public function index()
     {
+        // $serviceSearchIds = ServicePrice::where('price', '>=', $minPrice)->where('price', '<=', $maxPrice)->pluck('serviceID')->toArray();
+        // lấy giá tiền của service rẻ nhất
+        $this->minPriceAllFacility = ServicePrice::orderBy('price', 'asc')->first()->price;
 
+        // lấy giá tiền của service đắt nhất
+        $this->maxPriceAllFacility = ServicePrice::orderBy('price', 'desc')->first()->price;
         $MassageFacilities = MassageFacilityResource::collection(MassageFacility::all());
         $MassageServices = MassageService::select('serviceName')->groupBy('serviceName')->get();
         return [
             'result' => $MassageFacilities,
             'serviceList' => $MassageServices,
+            'minPrice' => $this->minPriceAllFacility,
+            'maxPrice' => $this->maxPriceAllFacility,
         ];
     }
 
@@ -92,11 +99,6 @@ class MassageFacilityController extends Controller
 
             $query->whereIn('id', $facilitySearchIds);
 
-            // lấy giá tiền của service rẻ nhất
-            $this->minPriceAllFacility = ServicePrice::whereIn('serviceID', $serviceSearchIds)->orderBy('price', 'asc')->first()->price;
-
-            // lấy giá tiền của service đắt nhất
-            $this->maxPriceAllFacility = ServicePrice::whereIn('serviceID', $serviceSearchIds)->orderBy('price', 'desc')->first()->price;
         }
 
         // rate
@@ -111,9 +113,6 @@ class MassageFacilityController extends Controller
 
         return [
             'result' => MassageFacilityResource::collection($query->get()),
-            'minPrice' => $this->minPriceAllFacility,
-            'maxPrice' => $this->maxPriceAllFacility,
-            'serviceList' => $this->serviceList,
         ];
     }
 
