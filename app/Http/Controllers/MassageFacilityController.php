@@ -24,7 +24,7 @@ class MassageFacilityController extends Controller
     {
 
         $MassageFacilities = MassageFacilityResource::collection(MassageFacility::all());
-        $MassageServices = MassageService::pluck('serviceName')->toArray();
+        $MassageServices = MassageService::select('serviceName')->groupBy('serviceName')->get();
         return [
             'result' => $MassageFacilities,
             'serviceList' => $MassageServices,
@@ -73,7 +73,7 @@ class MassageFacilityController extends Controller
         // massage service
         if ($req->__isset('serviceList')) {
 
-            $serviceList = array($req->serviceList);
+            $serviceList = $req->serviceList;
 
             $query->with('massage_services')
                 ->whereHas('massage_services', function (Builder $query) use ($serviceList) {
