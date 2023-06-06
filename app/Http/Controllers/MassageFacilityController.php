@@ -16,11 +16,10 @@ use Illuminate\Http\Request;
 
 class MassageFacilityController extends Controller
 {
-    public function index()
-    {
-
+    public function index() {
+        
         $MassageFacilities = MassageFacilityResource::collection(MassageFacility::all());
-        $MassageServices = MassageService::pluck('serviceName')->toArray();
+        $MassageServices = MassageService::select('serviceName')->groupBy('serviceName')->get();
         return [
             'result' => $MassageFacilities,
             'serviceList' => $MassageServices,
