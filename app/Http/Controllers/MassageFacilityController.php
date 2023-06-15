@@ -20,9 +20,9 @@ class MassageFacilityController extends Controller
     public $maxPriceAllFacility;
     public $serviceList = array();
 
+    // return all massage facilities
     public function index()
     {
-        // $serviceSearchIds = ServicePrice::where('price', '>=', $minPrice)->where('price', '<=', $maxPrice)->pluck('serviceID')->toArray();
         // lấy giá tiền của service rẻ nhất
         $this->minPriceAllFacility = ServicePrice::orderBy('price', 'asc')->first()->price;
 
@@ -38,6 +38,7 @@ class MassageFacilityController extends Controller
         ];
     }
 
+    // filter massage facilities
     public function filter(Request $req)
     {
 
@@ -116,6 +117,7 @@ class MassageFacilityController extends Controller
         ];
     }
 
+    // show detail
     public function detail($id)
     {
         $inforFacility = MassageFacility::where('id', '=', $id)
@@ -153,5 +155,28 @@ class MassageFacilityController extends Controller
         }
 
         return $inforFacility;
+    }
+
+    // store to database
+    public function store(Request $req) {
+        
+        $imageLibraryController = new ImageLibraryController();
+        $staffController = new StaffController();
+        $massageServiceController = new MassageServiceController();
+        $servicePriceController = new ServicePriceController();
+        $createRequestController = new CreateRequestController();
+
+        // lưu massage facility
+
+        // lưu ảnh vào bảng image_librarys
+
+        // lưu staff vào bảng staffs
+
+        // lưu service vào bảng massage_services
+
+        // lưu giá của các service vào bảng service_prices
+
+        // tạo create request tương ứng với massage facility hiện tại,
+        // và lưu vào bảng create_requests
     }
 }

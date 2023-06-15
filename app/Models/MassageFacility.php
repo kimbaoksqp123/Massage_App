@@ -58,4 +58,11 @@ class MassageFacility extends Model
         return $this->hasMany(Rating::class, 'facilityID', 'id');
     }
 
+    public function staffs() {
+        return $this->hasMany(Staff::class, 'facilityID', 'id');
+    }
+
+    public function create_request() {
+        return $this->hasOne(CreateRequest::class, 'facilityID', 'id');
+    }
 }

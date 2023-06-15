@@ -26,13 +26,14 @@ Route::post('/register', [AuthController::class, 'register'])->name('user.regist
 
 
 Route::prefix('massage-facilities')->group(function () {
+
     Route::get('/', [MassageFacilityController::class, 'index'])
         ->name('massage-facilities.show');
 
     Route::post('/filter', [MassageFacilityController::class, 'filter'])
         ->name('massage-facilities.filter');
 
-    Route::get('/detail/{id}', [MassageFacilityController::class, 'detail'])->name('massage-facilities.detail');
+    Route::get('/detail/{id}', [MassageFacilityController::class, 'detail'])
+        ->name('massage-facilities.detail');
 });
 
-// Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
