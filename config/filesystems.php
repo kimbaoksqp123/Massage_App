@@ -43,6 +43,12 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+        'staffs' => [
+            'driver' => 'local',
+            'root' => storage_path('app/staffs'),
+            'url' => env('APP_URL').'/staffs',
+            'visibility' => 'public',
+        ],
 
         's3' => [
             'driver' => 's3',
