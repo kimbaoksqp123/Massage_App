@@ -34,9 +34,6 @@ class UserFactory extends Factory
             'age' => $fake->numberBetween(18, 80),
             'gender' => $fake->boolean(),
             'userType' => '0',
-
-
-
         ];
     }
 
