@@ -8,6 +8,6 @@ use Illuminate\Http\Request;
 class ServicePriceController extends Controller
 {
     public function store(Request $req) {
-        
+        //todo
     }
 }

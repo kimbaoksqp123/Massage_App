@@ -163,20 +163,21 @@ class MassageFacilityController extends Controller
         $imageLibraryController = new ImageLibraryController();
         $staffController = new StaffController();
         $massageServiceController = new MassageServiceController();
-        $servicePriceController = new ServicePriceController();
         $createRequestController = new CreateRequestController();
-
-        // lưu massage facility
+        
+        //todo lưu thông tin massage facility
 
         // lưu ảnh vào bảng image_librarys
+        $imageLibraryController->store($req);
 
         // lưu staff vào bảng staffs
+        $staffController->store($req);
 
-        // lưu service vào bảng massage_services
-
-        // lưu giá của các service vào bảng service_prices
+        // lưu service và giá vào bảng massage_services và bảng service_prices
+        $massageServiceController->store($req);
 
         // tạo create request tương ứng với massage facility hiện tại,
         // và lưu vào bảng create_requests
+        $createRequestController->store($req);
     }
 }

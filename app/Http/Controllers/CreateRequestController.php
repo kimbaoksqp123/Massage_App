@@ -8,6 +8,6 @@ use Illuminate\Http\Request;
 class CreateRequestController extends Controller
 {
     public function store(Request $req) {
-        
+        //todo
     }
 }
