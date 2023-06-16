@@ -99,7 +99,6 @@ class MassageFacilityController extends Controller
             $facilitySearchIds = MassageService::wherein('id', $serviceSearchIds)->pluck('facilityID')->toArray();
 
             $query->whereIn('id', $facilitySearchIds);
-
         }
 
         // rate
@@ -158,8 +157,8 @@ class MassageFacilityController extends Controller
     }
 
     // store to database
-    public function store(Request $req) {
-        
+    public function store(Request $req)
+    {
         $imageLibraryController = new ImageLibraryController();
         $staffController = new StaffController();
         $massageServiceController = new MassageServiceController();
@@ -169,6 +168,9 @@ class MassageFacilityController extends Controller
         // lưu massage facility
 
         // lưu ảnh vào bảng image_librarys
+        // $imageLibraryController->store($massageFacilityId, $imageLibararys);
+
+        // return $imageLibararys;
 
         // lưu staff vào bảng staffs
 
