@@ -159,6 +159,8 @@ class MassageFacilityController extends Controller
 
     // store to database
     public function store(Request $req) {
+
+        dd($req);
         
         $imageLibraryController = new ImageLibraryController();
         $staffController = new StaffController();

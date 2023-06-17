@@ -35,5 +35,8 @@ Route::prefix('massage-facilities')->group(function () {
 
     Route::get('/detail/{id}', [MassageFacilityController::class, 'detail'])
         ->name('massage-facilities.detail');
+
+    Route::post('/store', [MassageFacilityController::class, 'store'])
+        ->name('massage-facilities.store');
 });
 
