@@ -167,6 +167,7 @@ class MassageFacilityController extends Controller
             'img/img_06_05.jpg',
         ];
 
+        // truyền req->data
         $massageFacility = MassageFacility::create([
             'ownerId' => 6,
             'name' => "test",
