@@ -160,10 +160,22 @@ class MassageFacilityController extends Controller
     // store to database
     public function store(Request $req) {
 
-        foreach ($req->file('fileList') as $file) {
-            $file->store('testImg');
-        }
-        return response('ok');
+        /**
+         * /storage/app/
+         * staff: public/staffs/{id_nhanvien}/
+         * imageLibrary: public/massageFacilities/{id_quan}/
+         * massageService: public/massageService/{id_service}/
+         */
+
+        // ví dụ:
+        // foreach ($req->file('fileList') as $file) {
+        //     $file->storeAs(
+        //         'public/staffs/{id}/',
+        //         'aabcasdsa'
+        //     );
+        // }
+
+        //return response('ok');
         
         $imageLibraryController = new ImageLibraryController();
         $staffController = new StaffController();
