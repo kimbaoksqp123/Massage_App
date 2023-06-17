@@ -160,7 +160,10 @@ class MassageFacilityController extends Controller
     // store to database
     public function store(Request $req) {
 
-        dd($req);
+        foreach ($req->file('fileList') as $file) {
+            $file->store('testImg');
+        }
+        return response('ok');
         
         $imageLibraryController = new ImageLibraryController();
         $staffController = new StaffController();
