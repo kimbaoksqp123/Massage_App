@@ -39,9 +39,6 @@ class AuthController extends Controller
         $token = $user->createToken('authToken')->plainTextToken;
 
         $returnData = [
-            'userID' => $user->id,
-            'userName' => $user->username,
-            'userAvatar' => $user->avatarImageUrl,
             'accessToken' => $token,
             'type_token' => 'Bearer',
         ];
@@ -59,7 +56,13 @@ class AuthController extends Controller
 
     public function user(Request $request)
     {
-        return $request->user();
+        $getUserByToken = $request->user();
+
+        return [
+            'userID' => $getUserByToken->id,
+            'userName' => $getUserByToken->username,
+            'userAvatar' => $getUserByToken->avatarImageUrl,
+        ];
     }
 
 
