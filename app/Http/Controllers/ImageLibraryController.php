@@ -11,15 +11,15 @@ use Illuminate\Support\Facades\Storage;
 
 class ImageLibraryController extends Controller
 {
-    public function store($massageFacilityId, $imageLibararys)
+    public function store($massageFacility, $imageLibararys)
     {
         for ($i = 0; $i < count($imageLibararys); $i++) {
             $data[] = [
-                'facilityID' => $massageFacilityId,
+                'facilityID' => $massageFacility->id,
                 'imageURL' => $imageLibararys[$i],
             ];
         }
 
-        ImageLibrary::insert($data);
+        $massageFacility->image_librarys()->insert($data);
     }
 }
