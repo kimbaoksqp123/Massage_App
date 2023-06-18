@@ -8,6 +8,7 @@ use App\Models\Staff;
 use App\Models\MassageFacility ;
 class StaffController extends Controller
 {
+
     public function store($staff_request, $massage_facility) {
         $massage_facility->staffs = $massage_facility->staffs->create(
             [
@@ -21,5 +22,6 @@ class StaffController extends Controller
             ]
             );        
         //Chạy lệnh php artisan storage:link để tạo liên kết tới thư mục lưu trữ
-    }
+
+        }
 }

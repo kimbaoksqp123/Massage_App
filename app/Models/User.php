@@ -54,9 +54,9 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function massage_facilitys()
+    public function massage_facility()
     {
-        return $this->hasMany(MassageFacility::class, 'ownerID', 'id');
+        return $this->hasOne(MassageFacility::class, 'ownerID', 'id');
     }
 
     public function bookings()
