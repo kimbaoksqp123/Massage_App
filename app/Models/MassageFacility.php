@@ -14,7 +14,7 @@ class MassageFacility extends Model
     protected $primaryKey = 'id'; 
     public $timestamps = false;
     protected $fillable = [
-        'ownerId',
+        'ownerID',
         'name',
         'description',
         'location',
