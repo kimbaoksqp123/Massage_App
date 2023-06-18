@@ -176,7 +176,6 @@ class MassageFacilityController extends Controller
             'averageRating' => 4.5,
         ]);
 
-
         /**
          * /storage/app/
          * staff: public/staffs/{id_nhanvien}/
