@@ -39,4 +39,3 @@ Route::prefix('massage-facilities')->group(function () {
     Route::post('/store', [MassageFacilityController::class, 'store'])
         ->name('massage-facilities.store');
 });
-

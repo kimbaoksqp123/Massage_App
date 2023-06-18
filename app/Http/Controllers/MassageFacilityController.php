@@ -99,7 +99,6 @@ class MassageFacilityController extends Controller
             $facilitySearchIds = MassageService::wherein('id', $serviceSearchIds)->pluck('facilityID')->toArray();
 
             $query->whereIn('id', $facilitySearchIds);
-
         }
 
         // rate
@@ -158,7 +157,24 @@ class MassageFacilityController extends Controller
     }
 
     // store to database
-    public function store(Request $req) {
+    public function store(Request $req)
+    {
+        // foreach ($req->file('fileList') as $file) {
+        //     $file->store('testImg');
+        // }
+
+        // data test
+        $massageFacility = MassageFacility::create([
+            'ownerId' => 6,
+            'name' => "test",
+            'description' => "test",
+            'location' => "test",
+            'imageURL' => "test",
+            'phoneNumber' => "test",
+            'emailAddress' => "test",
+            'capacity' => 10,
+            'averageRating' => 4.5,
+        ]);
 
         /**
          * /storage/app/
@@ -176,16 +192,18 @@ class MassageFacilityController extends Controller
         // }
 
         //return response('ok');
-        
+
         $imageLibraryController = new ImageLibraryController();
         $staffController = new StaffController();
         $massageServiceController = new MassageServiceController();
         $createRequestController = new CreateRequestController();
-        
+
         //todo lưu thông tin massage facility
 
         // lưu ảnh vào bảng image_librarys
-        $imageLibraryController->store($req);
+        return $imageLibraryController->store($massageFacility, $req->file('imageLibrary'));
+
+        // return $imageLibararys;
 
         // lưu staff vào bảng staffs
         $staffController->store($req);
