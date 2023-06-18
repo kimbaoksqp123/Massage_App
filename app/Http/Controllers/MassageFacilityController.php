@@ -159,22 +159,18 @@ class MassageFacilityController extends Controller
     // store to database
     public function store(Request $req)
     {
-        // foreach ($req->file('fileList') as $file) {
-        //     $file->store('testImg');
-        // }
-
         // data test
-        $massageFacility = MassageFacility::create([
-            'ownerId' => 6,
-            'name' => "test",
-            'description' => "test",
-            'location' => "test",
-            'imageURL' => "test",
-            'phoneNumber' => "test",
-            'emailAddress' => "test",
-            'capacity' => 10,
-            'averageRating' => 4.5,
-        ]);
+        // $massageFacility = MassageFacility::create([
+        //     'ownerId' => 6,
+        //     'name' => "test",
+        //     'description' => "test",
+        //     'location' => "test",
+        //     'imageURL' => "test",
+        //     'phoneNumber' => "test",
+        //     'emailAddress' => "test",
+        //     'capacity' => 10,
+        //     'averageRating' => 4.5,
+        // ]);
 
         /**
          * /storage/app/
@@ -193,23 +189,40 @@ class MassageFacilityController extends Controller
 
         //return response('ok');
 
+        // lấy data từ request
+        // $ownerID = $req->ownerID;
+        $ownerID = $req->user()->id;
+        $name = $req->name;
+        $description = $req->description;
+        $location = $req->location;
+        $phoneNumber = $req->phoneNumber;
+        $emailAddress = $req->emailAddress;
+
         $imageLibraryController = new ImageLibraryController();
         $staffController = new StaffController();
         $massageServiceController = new MassageServiceController();
         $createRequestController = new CreateRequestController();
 
         //todo lưu thông tin massage facility
+        $massageFacility = MassageFacility::create([
+            'ownerID' => $ownerID,
+            'name' => $name,
+            'description' => $description,
+            'location' => $location,
+            'phoneNumber' => $phoneNumber,
+            'emailAddress' => $emailAddress,
+        ]);
 
         // lưu ảnh vào bảng image_librarys
-        return $imageLibraryController->store($massageFacility, $req->file('imageLibrary'));
+        $imageLibraryController->store($massageFacility, $req->file('imageLibrary'));
 
         // return $imageLibararys;
 
         // lưu staff vào bảng staffs
 
-        foreach($req->staffs as $staff_request){
-            $staffController->store($staff_request, $masage_facility);
-        }
+        // foreach($req->staffs as $staff_request){
+        //     $staffController->store($staff_request, $masage_facility);
+        // }
 
        
 
@@ -219,5 +232,7 @@ class MassageFacilityController extends Controller
         // tạo create request tương ứng với massage facility hiện tại,
         // và lưu vào bảng create_requests
         $createRequestController->store($req);
+
+        return response('ok');
     }
 }
