@@ -159,14 +159,19 @@ class MassageFacilityController extends Controller
     // store to database
     public function store(Request $req)
     {
-        $imageLibararys = [
-            'img/img_06_01.jpg',
-            'img/img_06_02.jpg',
-            'img/img_06_03.jpg',
-            'img/img_06_04.jpg',
-            'img/img_06_05.jpg',
-        ];
+        foreach ($req->file('fileList') as $file) {
+            $file->store('testImg');
+        }
+        return response('ok');
+        // $imageLibararys = [
+        //     'img/img_06_01.jpg',
+        //     'img/img_06_02.jpg',
+        //     'img/img_06_03.jpg',
+        //     'img/img_06_04.jpg',
+        //     'img/img_06_05.jpg',
+        // ];
 
+        // truyền req->data
         $massageFacility = MassageFacility::create([
             'ownerId' => 6,
             'name' => "test",
@@ -179,26 +184,44 @@ class MassageFacilityController extends Controller
             'averageRating' => 4.5,
         ]);
 
+
+        /**
+         * /storage/app/
+         * staff: public/staffs/{id_nhanvien}/
+         * imageLibrary: public/massageFacilities/{id_quan}/
+         * massageService: public/massageService/{id_service}/
+         */
+
+        // ví dụ:
+        // foreach ($req->file('fileList') as $file) {
+        //     $file->storeAs(
+        //         'public/staffs/{id}/',
+        //         'aabcasdsa'
+        //     );
+        // }
+
+        //return response('ok');
+
         $imageLibraryController = new ImageLibraryController();
         $staffController = new StaffController();
         $massageServiceController = new MassageServiceController();
-        $servicePriceController = new ServicePriceController();
         $createRequestController = new CreateRequestController();
 
-        // lưu massage facility
+        //todo lưu thông tin massage facility
 
         // lưu ảnh vào bảng image_librarys
-        $imageLibraryController->store($massageFacility, $imageLibararys);
+        // $imageLibraryController->store($massageFacility, $imageLibararys);
 
         // return $imageLibararys;
 
         // lưu staff vào bảng staffs
+        $staffController->store($req);
 
-        // lưu service vào bảng massage_services
-
-        // lưu giá của các service vào bảng service_prices
+        // lưu service và giá vào bảng massage_services và bảng service_prices
+        $massageServiceController->store($req);
 
         // tạo create request tương ứng với massage facility hiện tại,
         // và lưu vào bảng create_requests
+        $createRequestController->store($req);
     }
 }

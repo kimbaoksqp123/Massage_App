@@ -16,8 +16,13 @@ class ImageLibraryController extends Controller
         for ($i = 0; $i < count($imageLibararys); $i++) {
             $data[] = [
                 'facilityID' => $massageFacility->id,
-                'imageURL' => $imageLibararys[$i],
+                'imageURL' => "$massageFacility->id_$imageLibararys[$i]",
             ];
+
+            // Tạo đường dẫn trong thư mục Storage/app/public/imageFacilities/{id của quán}/base (base để lưu ảnh của quán)
+            // Storage::makeDirectory("public/imageFacilities/$massageFacility->id/base");
+            // anh(file) ->  storeAs('url', imageName);
+            // $imageLibararys[$i]->storeAs("images/$massageFacility->id/base", "$massageFacility->id_$imageLibararys[$i]");
         }
 
         $massageFacility->image_librarys()->insert($data);

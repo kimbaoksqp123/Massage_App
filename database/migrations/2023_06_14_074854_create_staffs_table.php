@@ -18,8 +18,8 @@ return new class extends Migration
             $table->date('dob');
             $table->boolean('gender');
             $table->tinyInteger('jlpt');
-            $table->string('certificateImage', 200);
-            $table->string('image', 200);
+            $table->string('certificateImage', 200)->default('img\img_user\avatar_01.jpg');
+            $table->string('image', 200)->default('img\img_user\avatar_01.jpg');
             $table->string('hometown', 200);
             $table->timestamps();
         });
