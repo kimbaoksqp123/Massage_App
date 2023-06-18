@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('serviceDescription'); 
             $table->integer('price');
             $table->boolean('availabilityStatus');
-            $table->string('imageURL');
+            $table->string('imageURL')->default('img\img_user\avatar_01.jpg');
             $table->integer('serviceDuration');
             $table->timestamps();
         });
