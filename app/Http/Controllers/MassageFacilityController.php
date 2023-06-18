@@ -159,19 +159,11 @@ class MassageFacilityController extends Controller
     // store to database
     public function store(Request $req)
     {
-        foreach ($req->file('fileList') as $file) {
-            $file->store('testImg');
-        }
-        return response('ok');
-        // $imageLibararys = [
-        //     'img/img_06_01.jpg',
-        //     'img/img_06_02.jpg',
-        //     'img/img_06_03.jpg',
-        //     'img/img_06_04.jpg',
-        //     'img/img_06_05.jpg',
-        // ];
+        // foreach ($req->file('fileList') as $file) {
+        //     $file->store('testImg');
+        // }
 
-        // truyền req->data
+        // data test
         $massageFacility = MassageFacility::create([
             'ownerId' => 6,
             'name' => "test",
@@ -210,7 +202,7 @@ class MassageFacilityController extends Controller
         //todo lưu thông tin massage facility
 
         // lưu ảnh vào bảng image_librarys
-        // $imageLibraryController->store($massageFacility, $imageLibararys);
+        return $imageLibraryController->store($massageFacility, $req->file('imageLibrary'));
 
         // return $imageLibararys;
 

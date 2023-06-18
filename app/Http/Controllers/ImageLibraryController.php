@@ -11,18 +11,25 @@ use Illuminate\Support\Facades\Storage;
 
 class ImageLibraryController extends Controller
 {
-    public function store($massageFacility, $imageLibararys)
+    public function store($massageFacility, $imageLibrarys)
     {
-        for ($i = 0; $i < count($imageLibararys); $i++) {
+        $url = "public/imageFacilities/$massageFacility->id/";
+
+        if (!Storage::exists($url)) {
+            Storage::makeDirectory($url);
+        }
+
+        for ($i = 0; $i < count($imageLibrarys); $i++) {
+
+            // Lưu ảnh vào storage
+            $formatFile =  $imageLibrarys[$i]->getClientOriginalExtension();
+            $imageLibrarys[$i]->storeAs($url, "$i" + 1 . ".$formatFile");
+
+            // Tạo data để thực hiện câu query
             $data[] = [
                 'facilityID' => $massageFacility->id,
-                'imageURL' => "$massageFacility->id_$imageLibararys[$i]",
+                'imageURL' => "$i" + 1 . ".$formatFile",
             ];
-
-            // Tạo đường dẫn trong thư mục Storage/app/public/imageFacilities/{id của quán}/base (base để lưu ảnh của quán)
-            // Storage::makeDirectory("public/imageFacilities/$massageFacility->id/base");
-            // anh(file) ->  storeAs('url', imageName);
-            // $imageLibararys[$i]->storeAs("images/$massageFacility->id/base", "$massageFacility->id_$imageLibararys[$i]");
         }
 
         $massageFacility->image_librarys()->insert($data);
