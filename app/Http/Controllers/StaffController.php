@@ -14,6 +14,7 @@ class StaffController extends Controller
     public function store($staff_request, $massage_facility) {
         $staff = Staff::create(
             [
+                'facilityID' => $massage_facility->id,
                 'name' => $staff_request['name'],
                 // 'name' => $staff_request->name,)
                 'dob'  => date("Y-m-d H:i:s", strtotime($staff_request['DOB'])),
@@ -22,7 +23,7 @@ class StaffController extends Controller
                 // 'certificateImage' => $staff_request->certificateImage->store('staffs'),
                 // 'image'  => $staff_request->image->store('staffs'),
                 'hometown'  => $staff_request['hometown'],
-                'facilityID' => $massage_facility->id,
+               
             ]
             );        
         //Chạy lệnh php artisan storage:link để tạo liên kết tới thư mục lưu trữ
