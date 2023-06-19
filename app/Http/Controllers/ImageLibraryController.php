@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ImageLibraryController extends Controller
 {
-    public function store($massageFacility, $imageLibrary)
+    public function store($massageFacility, $req)
     {
         $url = "public/imageFacilities/$massageFacility->id/";
 
@@ -20,24 +20,34 @@ class ImageLibraryController extends Controller
         }
 
         $count = 0;
-        foreach ($imageLibrary->file('files') as $obj) {
-            // Lưu ảnh vào storage
-            $formatFile =  $obj->image->getClientOriginalExtension();
-            $obj->image->storeAs($url, $count + 1 . ".$formatFile");
+        // foreach ($imageLibrary as $obj) {
+        //     // Lưu ảnh vào storage
+        //     $formatFile = $obj['image']->file()->getClientOriginalExtension();
+        //     $obj['image']->file()->storeAs($url, $count + 1 . ".$formatFile");
+
+        //     // Tạo data để thực hiện câu query
+        //     $data[] = [
+        //         'facilityID' => $massageFacility->id,
+        //         'imageURL' => $count + 1 . ".$formatFile",
+        //     ];
+        // }
+
+        foreach ($req->file('imageLibrary') as $file) {
+            $formatFile = $file->getClientOriginalExtension();
+            $file->storeAs($url, $count + 1 . ".$formatFile");
 
             // Tạo data để thực hiện câu query
             $data[] = [
                 'facilityID' => $massageFacility->id,
                 'imageURL' => $count + 1 . ".$formatFile",
             ];
-        }
 
-        // foreach ($imageLibrary->file('files') as $file) {
-        //     $file->storeAs(
-        //         'public/staffs/{id}/',
-        //         'aabcasdsa'
-        //     );
-        // }
+            $count++;
+            // $file->storeAs(
+            //     'public/staffs/{id}/',
+            //     'aabcasdsa'
+            // );
+        }
 
         $massageFacility->image_librarys()->insert($data);
     }
