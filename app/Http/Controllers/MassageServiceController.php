@@ -33,7 +33,7 @@ class MassageServiceController extends Controller
         }
         // lưu thông tin giá vào bảng service_prices
         $servicePriceController = new ServicePriceController();
-        $servicePriceController->store($req);
+        $servicePriceController->store($req,$masageFacility);
         
         return response('ok');
     }

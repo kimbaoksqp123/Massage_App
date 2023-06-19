@@ -227,7 +227,7 @@ class MassageFacilityController extends Controller
 
 
         // lưu service và giá vào bảng massage_services và bảng service_prices
-        $massageServiceController->store($req);
+        $massageServiceController->store($req,$massageFacility);
 
         // tạo create request tương ứng với massage facility hiện tại,
         // và lưu vào bảng create_requests
