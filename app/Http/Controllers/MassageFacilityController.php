@@ -214,17 +214,15 @@ class MassageFacilityController extends Controller
         ]);
 
         // lưu ảnh vào bảng image_librarys
-        $imageLibraryController->store($massageFacility, $req->file('imageLibrary'));
+        $imageLibraryController->store($massageFacility, $req->imageLibrary);
 
-        // return $imageLibararys;
 
         // lưu staff vào bảng staffs
+        foreach ($req->staffList as $staffRequest) {
+            $staffController->store($staffRequest, $massageFacility);
+        }
 
-        // foreach($req->staffs as $staff_request){
-        //     $staffController->store($staff_request, $masage_facility);
-        // }
 
-       
 
         // lưu service và giá vào bảng massage_services và bảng service_prices
         $massageServiceController->store($req);
