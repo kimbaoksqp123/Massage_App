@@ -9,10 +9,10 @@ use App\Models\ServicePrice;
 
 class MassageServiceController extends Controller
 {
-    public function store($req, $masageFacility) {
+    public function store(Request $req, $masageFacility) {
 
         //Nhan thong tin va luu vao bang MassageService        
-        $massageService = $masageFacility->service->create([
+        $massageService = MassageService::create([
             'facilityID' => $masageFacility->id,
             'serviceName' => $req->serviceName,
             'serviceDescription' => $req->serviceDescription,
@@ -23,13 +23,14 @@ class MassageServiceController extends Controller
             // $facility_id = $masageFacility->id;
             // $image = 'service_'.$service_id.'_avatar'.$req->file('image')->getClientOriginalExtension();
             // $massageService->image = $req->file('image')->store($service_id,'services');
-        $image = $req->file('image');
-        $imageName = $massageService->id . $image->getClientOriginalExtension();
-        $image->storeAs('public/messageService',$imageName);
-        //Luu duong dan toi hinh anh
-        $massageService->image = 'messageService/' .$imageName;
-        $massageService->save();
-
+        if ($req->hasFile('image')) {
+            $image = $req->file('image');
+            $imageName = $massageService->id . '.' . $image->getClientOriginalExtension();
+            $image->storeAs('public/messageService',$imageName);
+            //Luu duong dan toi hinh anh
+            $massageService->image = 'messageService/' . $imageName;
+            $massageService->save();
+        }
         // lưu thông tin giá vào bảng service_prices
         $servicePriceController = new ServicePriceController();
         $servicePriceController->store($req);
