@@ -229,7 +229,7 @@ class MassageFacilityController extends Controller
 
         // tạo create request tương ứng với massage facility hiện tại,
         // và lưu vào bảng create_requests
-        $createRequestController->store($req);
+        $createRequestController->store($massageFacility->id, $massageFacility->ownerID);
 
         return response('ok');
     }
