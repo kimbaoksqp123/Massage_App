@@ -19,7 +19,7 @@ class MassageFacilityResource extends JsonResource
             'name' => $this->name,
             'address' => $this->location,
             'description' => $this->description,
-            'imageURL' => $this->imageURL,
+            'imageURL' => $this->imageUrl,
             'rating' => $this->averageRating,
             'reviewCount' => $this->reviewCount,
         ];
