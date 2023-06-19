@@ -120,10 +120,10 @@ class MassageFacilityController extends Controller
     public function detail($id)
     {
         $inforFacility = MassageFacility::where('id', '=', $id)
-            ->get(['id', 'name', 'phoneNumber AS phone', 'location AS address', 'description', 'imageUrl AS imgMain']);
+            ->get(['id', 'name', 'phoneNumber AS phone', 'location AS address', 'description']);
 
         //danh sách ảnh của 1 quán
-        $imgList = ImageLibrary::where('facilityID', '=', $id)->pluck('imageUrl')->toArray();
+        $imgList = ImageLibrary::where('facilityID', '=', $id)->pluck('imageURL')->toArray();
 
         // danh sách các dịch vụ của quán
         $serviceList = MassageService::where('facilityID', '=', $id)->get(['id', 'serviceName', 'serviceDescription']);
@@ -227,7 +227,7 @@ class MassageFacilityController extends Controller
 
 
         // lưu service và giá vào bảng massage_services và bảng service_prices
-        $massageServiceController->store($req);
+        // $massageServiceController->store($req);
 
         // tạo create request tương ứng với massage facility hiện tại,
         // và lưu vào bảng create_requests
