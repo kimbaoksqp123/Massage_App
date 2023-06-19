@@ -1,24 +1,28 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Database\Eloquent\Collection;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Staff;
 use App\Models\MassageFacility ;
+use DateTime;
+
 class StaffController extends Controller
 {
 
     public function store($staff_request, $massage_facility) {
-        $staff = $massage_facility->staffs->create(
+        $staff = Staff::create(
             [
-                'name' => $staff_request->name,
-                'dob'  => $staff_request->dob,
-                'gender'  => $staff_request->gender,
-                'jlpt'  => $staff_request->jlpt,
+                'name' => $staff_request['name'],
+                // 'name' => $staff_request->name,)
+                'dob'  => date("Y-m-d H:i:s", strtotime($staff_request['DOB'])),
+                'gender'  => $staff_request['gender'],
+                'jlpt'  => $staff_request['jlpt'],
                 // 'certificateImage' => $staff_request->certificateImage->store('staffs'),
                 // 'image'  => $staff_request->image->store('staffs'),
-                'hometown'  => $staff_request->hometown,
+                'hometown'  => $staff_request['hometown'],
+                'facilityID' => $massage_facility->id,
             ]
             );        
         //Chạy lệnh php artisan storage:link để tạo liên kết tới thư mục lưu trữ

@@ -220,9 +220,9 @@ class MassageFacilityController extends Controller
 
 
         // lưu staff vào bảng staffs
-        // foreach ($req->staffList as $staffRequest) {
-            // $staffController->store($staffRequest, $massageFacility);
-        // }
+        foreach ($req->staffList as $staffRequest) {
+            $staffController->store($staffRequest, $massageFacility);
+        }
 
 
 
