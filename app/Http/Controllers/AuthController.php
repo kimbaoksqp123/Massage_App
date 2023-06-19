@@ -62,6 +62,7 @@ class AuthController extends Controller
             'userID' => $getUserByToken->id,
             'userName' => $getUserByToken->username,
             'userAvatar' => $getUserByToken->avatarImageUrl,
+            'data' => $request->data,
         ];
     }
 

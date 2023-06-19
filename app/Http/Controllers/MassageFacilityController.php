@@ -192,6 +192,8 @@ class MassageFacilityController extends Controller
         // lấy data từ request
         // $ownerID = $req->ownerID;
         $ownerID = $req->user()->id;
+        return ["0" => $ownerID, "1" => $req->data];
+
         $name = $req->name;
         $description = $req->description;
         $location = $req->location;

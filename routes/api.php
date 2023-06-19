@@ -25,7 +25,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('user.login');
 Route::post('/register', [AuthController::class, 'register'])->name('user.register');
 
 
-Route::prefix('massage-facilities')->group(function () {
+Route::middleware('auth:sanctum')->prefix('massage-facilities')->group(function () {
 
     Route::get('/', [MassageFacilityController::class, 'index'])
         ->name('massage-facilities.show');

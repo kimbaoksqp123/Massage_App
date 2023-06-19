@@ -19,16 +19,15 @@ class ImageLibraryController extends Controller
             Storage::makeDirectory($url);
         }
 
-        for ($i = 0; $i < count($imageLibrary); $i++) {
-
+        foreach ($imageLibrary as $key => $image) {
             // Lưu ảnh vào storage
-            $formatFile =  $imageLibrary[$i]->file('image')->getClientOriginalExtension();
-            $imageLibrary[$i]->file('image')->storeAs($url, "$i" + 1 . ".$formatFile");
+            $formatFile =  $image[$key]->file('image')->getClientOriginalExtension();
+            $image[$key]->file('image')->storeAs($url, "$key" + 1 . ".$formatFile");
 
             // Tạo data để thực hiện câu query
             $data[] = [
                 'facilityID' => $massageFacility->id,
-                'imageURL' => "$i" + 1 . ".$formatFile",
+                'imageURL' => "$key" + 1 . ".$formatFile",
             ];
         }
 
