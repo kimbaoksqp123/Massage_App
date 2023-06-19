@@ -192,7 +192,7 @@ class MassageFacilityController extends Controller
         // lấy data từ request
         // $ownerID = $req->ownerID;
         $ownerID = $req->user()->id;
-        return ["0" => $ownerID, "1" => $req->data];
+        // return ["0" => $ownerID, "1" => $req->data];
 
         $name = $req->name;
         $description = $req->description;
@@ -216,22 +216,22 @@ class MassageFacilityController extends Controller
         ]);
 
         // lưu ảnh vào bảng image_librarys
-        $imageLibraryController->store($massageFacility, $req->imageLibrary);
+        $imageLibraryController->store($massageFacility, $req);
 
 
         // lưu staff vào bảng staffs
-        foreach ($req->staffList as $staffRequest) {
-            $staffController->store($staffRequest, $massageFacility);
-        }
+        // foreach ($req->staffList as $staffRequest) {
+            // $staffController->store($staffRequest, $massageFacility);
+        // }
 
 
 
         // lưu service và giá vào bảng massage_services và bảng service_prices
-        $massageServiceController->store($req,$massageFacility);
+        // $massageServiceController->store($req,$massageFacility);
 
         // tạo create request tương ứng với massage facility hiện tại,
         // và lưu vào bảng create_requests
-        $createRequestController->store($massageFacility->id, $massageFacility->ownerID);
+        // $createRequestController->store($massageFacility->id, $massageFacility->ownerID);
 
         return response('ok');
     }
