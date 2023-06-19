@@ -23,13 +23,13 @@ class MassageFacilityController extends Controller
     // return all massage facilities
     public function index()
     {
-        // lấy giá tiền của service rẻ nhất
+        // lấy giá tiền của service rẻ nhất và đắt nhất
         $this->minPriceAllFacility = ServicePrice::orderBy('price', 'asc')->first()->price;
-
-        // lấy giá tiền của service đắt nhất
         $this->maxPriceAllFacility = ServicePrice::orderBy('price', 'desc')->first()->price;
+
         $MassageFacilities = MassageFacilityResource::collection(MassageFacility::all());
         $MassageServices = MassageService::select('serviceName')->groupBy('serviceName')->get();
+
         return [
             'result' => $MassageFacilities,
             'serviceList' => $MassageServices,
@@ -120,10 +120,10 @@ class MassageFacilityController extends Controller
     public function detail($id)
     {
         $inforFacility = MassageFacility::where('id', '=', $id)
-            ->get(['id', 'name', 'phoneNumber AS phone', 'location AS address', 'description', 'imageURL AS imgMain']);
+            ->get(['id', 'name', 'phoneNumber AS phone', 'location AS address', 'description', 'imageUrl AS imgMain']);
 
         //danh sách ảnh của 1 quán
-        $imgList = ImageLibrary::where('facilityID', '=', $id)->pluck('imageURL')->toArray();
+        $imgList = ImageLibrary::where('facilityID', '=', $id)->pluck('imageUrl')->toArray();
 
         // danh sách các dịch vụ của quán
         $serviceList = MassageService::where('facilityID', '=', $id)->get(['id', 'serviceName', 'serviceDescription']);

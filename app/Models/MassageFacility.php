@@ -18,7 +18,6 @@ class MassageFacility extends Model
         'name',
         'description',
         'location',
-        'imageURL',
         'phoneNumber',
         'emailAddress',
         'capacity',
@@ -27,13 +26,20 @@ class MassageFacility extends Model
     ];
 
     // add custom attribute to array & json
-    protected $appends = ['review_count'];
+    protected $appends = ['review_count', 'image_url'];
 
     // accessors
     protected function reviewCount(): CastsAttribute {
 
         return new CastsAttribute(
             get: fn () => $this->ratings()->count(),
+        );
+    }
+
+    protected function imageUrl(): CastsAttribute {
+
+        return new CastsAttribute(
+            get: fn () => $this->image_librarys()->first(),
         );
     }
 
