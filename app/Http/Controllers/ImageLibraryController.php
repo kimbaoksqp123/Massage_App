@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ImageLibraryController extends Controller
 {
-    public function store($massageFacility, $imageLibrarys)
+    public function store($massageFacility, $imageLibrary)
     {
         $url = "public/imageFacilities/$massageFacility->id/";
 
@@ -19,11 +19,11 @@ class ImageLibraryController extends Controller
             Storage::makeDirectory($url);
         }
 
-        for ($i = 0; $i < count($imageLibrarys); $i++) {
+        for ($i = 0; $i < count($imageLibrary); $i++) {
 
             // Lưu ảnh vào storage
-            $formatFile =  $imageLibrarys[$i]->getClientOriginalExtension();
-            $imageLibrarys[$i]->storeAs($url, "$i" + 1 . ".$formatFile");
+            $formatFile =  $imageLibrary[$i]->file('image')->getClientOriginalExtension();
+            $imageLibrary[$i]->file('image')->storeAs($url, "$i" + 1 . ".$formatFile");
 
             // Tạo data để thực hiện câu query
             $data[] = [
