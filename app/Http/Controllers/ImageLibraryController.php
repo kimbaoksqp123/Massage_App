@@ -14,7 +14,6 @@ class ImageLibraryController extends Controller
     public function store($req, $massageFacility)
     {
         $url = "massageFacilities/$massageFacility->id/";
-        $count = 0;
 
         if (!Storage::disk('public_uploads')->exists($url)) {
             Storage::disk('public_uploads')->makeDirectory($url);
@@ -26,6 +25,7 @@ class ImageLibraryController extends Controller
 
         if (!empty($imageLibraryFiles)) {
 
+            $count = 0;
             foreach ($imageLibraryFiles as $file) {
     
                 // Lưu file vào storage

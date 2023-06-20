@@ -9,13 +9,11 @@ use App\Models\MassageService;
 
 class ServicePriceController extends Controller
 {
-    public function store(Request $req, MassageService $massageService) {
-        $servicePrice = ServicePrice::create([
-            'serviceID' => $massageService->id,
-            'price' => $req->price,
-            'durationTime' => $req->durationTime,
+    public function store($massageServiceId, $price) {
+        ServicePrice::create([
+            'serviceID' => $massageServiceId,
+            'price' => $price->price,
+            'durationTime' => $price->durationTime,
         ]);
-
-        return response('ServicePriceControllerOk');
     }
 }

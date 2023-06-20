@@ -155,21 +155,6 @@ class MassageFacilityController extends Controller
     // store to database
     public function store(Request $req)
     {
-        /**
-         * public/uploads/
-         * staff: staffs/{id_nhanvien}/
-         * imageLibrary: massageFacilities/{id_quan}/
-         * massageService: massageServices/{id_service}/
-         */
-
-        // ví dụ:
-        // foreach ($req->file('fileList') as $file) {
-        //     $file->storeAs(
-        //         'public/staffs/{id}/',
-        //         'aabcasdsa'
-        //     );
-        // }
-
         $imageLibraryController = new ImageLibraryController();
         $staffController = new StaffController();
         $massageServiceController = new MassageServiceController();
@@ -181,7 +166,6 @@ class MassageFacilityController extends Controller
         $location = $req->location;
         $phoneNumber = $req->phoneNumber;
         $emailAddress = $req->emailAddress;
-
 
         // lưu thông tin massage facility
         $massageFacility = MassageFacility::create([
@@ -204,11 +188,21 @@ class MassageFacilityController extends Controller
         }
 
         // lưu service và giá vào bảng massage_services và bảng service_prices
-        // if ($req->__isset('serviceList') && !empty($req->serviceList)) {
-        //     foreach ($req->serviceList as $service) {
-        //         $massageServiceController->store($service, $massageFacility);
-        //     }
-        // }
+        if ($req->__isset('serviceList') && !empty($req->serviceList)
+            && $req->__isset('serviceImgList') && !empty($req->file('serviceImgList'))) {
+
+            $services = $req->serviceList;
+            $serviceImages = $req->file('serviceImgList');
+
+            $count = 0;
+            foreach ($services as $service) {
+                $massageServiceController->store(
+                    $service,
+                    $serviceImages[$count],
+                    $massageFacility
+                );
+            }
+        }
 
         // tạo create request tương ứng với massage facility hiện tại,
         // và lưu vào bảng create_requests
