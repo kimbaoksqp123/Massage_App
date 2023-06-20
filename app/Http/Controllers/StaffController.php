@@ -29,11 +29,11 @@ class StaffController extends Controller
         //Lay ra id staff
         $staff_id = $staff->id;
         //Rename Filename : Staff_{id}_certificate
-        $certificateImage = 'Staff_'.$staff_id.'_certificate'.$staff_request['certificateImage']->getClientOriginalExtension();
+        $certificateImage = 'Staff_'.$staff_id.'_certificate.'.$staff_request['certificateImage']->getClientOriginalExtension();
         // //Store File : path = "app/public/staffs/{id}"
-        $image = 'staff_'.$staff_id.'_avatar'.$staff_request['image']->getClientOriginalExtension();
+        $image = 'staff_'.$staff_id.'_avatar.'.$staff_request['image']->getClientOriginalExtension();
         // $staff->image = $staff_request->file('image')->store($staff_id,'staffs');
-        $url = "public/staffs/$staff_id/";
+        $url = "public/staffs/$staff_id";
         // $formatFile = $staff_request['certificateImage']->getClientOriginalExtension();
         $staff->certificateImage = $staff_request['certificateImage']->storeAs($url,$certificateImage);
         $staff->image = $staff_request['certificateImage']->storeAs($url,$image);
