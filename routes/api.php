@@ -16,22 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->prefix('user')->group(function () {
-    Route::get('/', [AuthController::class, 'user']);
-    Route::get('/logout', [AuthController::class, 'logout']);
-});
-
 Route::post('/login', [AuthController::class, 'login'])->name('user.login');
 Route::post('/register', [AuthController::class, 'register'])->name('user.register');
 
-
-Route::middleware('auth:sanctum')->prefix('massage-facilities')->group(function () {
-    
-    Route::post('/store', [MassageFacilityController::class, 'store'])
-    ->name('massage-facilities.store');
-});
-
 Route::prefix('massage-facilities')->group(function () {
+
     Route::get('/', [MassageFacilityController::class, 'index'])
         ->name('massage-facilities.show');
 
@@ -40,4 +29,16 @@ Route::prefix('massage-facilities')->group(function () {
 
     Route::get('/detail/{id}', [MassageFacilityController::class, 'detail'])
         ->name('massage-facilities.detail');
+});
+
+Route::middleware('auth:sanctum')->prefix('user')->group(function () {
+    
+    Route::get('/', [AuthController::class, 'user']);
+    Route::get('/logout', [AuthController::class, 'logout']);
+});
+
+Route::middleware('auth:sanctum')->prefix('massage-facilities')->group(function () {
+    
+    Route::post('/store', [MassageFacilityController::class, 'store'])
+        ->name('massage-facilities.store');
 });

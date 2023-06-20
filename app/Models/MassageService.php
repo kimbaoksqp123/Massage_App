@@ -9,17 +9,16 @@ class MassageService extends Model
 {
     use HasFactory;
     protected $table = 'massage_services';
-    protected $primaryKey = 'id'; 
-    public $timestamps = false;
+    protected $primaryKey = 'id';
     protected $fillable = [
         'facilityID',
         'serviceName',
         'serviceDescription',
-        // 'price',
         'availabilityStatus',
-        'imageURL',
-        // 'serviceDuration',               
+        'imageURL',          
     ];
+
+    // relationships
     public function massage_facility()
     {
         return $this->belongsTo(MassageFacility::class, 'facilityID', 'id');
@@ -34,5 +33,4 @@ class MassageService extends Model
     {
         return $this->hasMany(ServicePrice::class, 'serviceID', 'id');
     }
-
 }

@@ -10,15 +10,14 @@ class Rating extends Model
     use HasFactory;
     protected $table = 'ratings';
     protected $primaryKey = 'id'; 
-    // public $timestamps = false;
     protected $fillable = [
         'userID',
         'facilityID',
         'comment',
-        'commentVoteup',
-        'created_at',
-        'updated_at',               
+        'commentVoteup',          
     ];
+
+    // relationships
     public function user()
     {
         return $this->belongsTo(User::class, 'userID', 'id');

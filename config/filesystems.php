@@ -43,6 +43,12 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+
+        'public_uploads' => [
+            'driver' => 'local',
+            'root' => public_path() . '/uploads',
+        ],
+        
         'staffs' => [
             'driver' => 'local',
             'root' => storage_path('app/public/staffs'),

@@ -9,18 +9,15 @@ class ImageLibrary extends Model
 {
     use HasFactory;
     protected $table = 'image_librarys';
-    protected $primaryKey = 'id'; 
-    public $timestamps = false;
+    protected $primaryKey = 'id';
     protected $fillable = [
         'facilityID',
         'imageURL',
-        
     ];
+
+    // relationships
     public function massage_facility()
     {
         return $this->belongsTo(MassageFacility::class, 'facilityID', 'id');
     }
-
-   
-
 }

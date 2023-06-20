@@ -16,16 +16,12 @@ use Illuminate\Http\Request;
 
 class MassageFacilityController extends Controller
 {
-    public $minPriceAllFacility;
-    public $maxPriceAllFacility;
-    public $serviceList = array();
-
     // return all massage facilities
     public function index()
     {
         // lấy giá tiền của service rẻ nhất và đắt nhất
-        $this->minPriceAllFacility = ServicePrice::orderBy('price', 'asc')->first()->price;
-        $this->maxPriceAllFacility = ServicePrice::orderBy('price', 'desc')->first()->price;
+        $minPriceAllFacility = ServicePrice::orderBy('price', 'asc')->first()->price;
+        $maxPriceAllFacility = ServicePrice::orderBy('price', 'desc')->first()->price;
 
         $MassageFacilities = MassageFacilityResource::collection(MassageFacility::all());
         $MassageServices = MassageService::select('serviceName')->groupBy('serviceName')->get();
@@ -33,8 +29,8 @@ class MassageFacilityController extends Controller
         return [
             'result' => $MassageFacilities,
             'serviceList' => $MassageServices,
-            'minPrice' => $this->minPriceAllFacility,
-            'maxPrice' => $this->maxPriceAllFacility,
+            'minPrice' => $minPriceAllFacility,
+            'maxPrice' => $maxPriceAllFacility,
         ];
     }
 
@@ -54,9 +50,9 @@ class MassageFacilityController extends Controller
             $locationWithoutSpaces = "REPLACE(REPLACE(REPLACE(location, ' ', ''), '\t', ''), '\n', '')";
 
             $subQuery = MassageFacility::selectRaw("
-                id as sub_query_id,
-                $nameWithoutSpaces as nameWithoutSpaces,
-                $locationWithoutSpaces as locationWithoutSpaces
+                id AS sub_query_id,
+                $nameWithoutSpaces AS nameWithoutSpaces,
+                $locationWithoutSpaces AS locationWithoutSpaces
             ");
 
             $query->joinSub(
@@ -96,7 +92,7 @@ class MassageFacilityController extends Controller
             $maxPrice = $req->maxPrice;
 
             $serviceSearchIds = ServicePrice::where('price', '>=', $minPrice)->where('price', '<=', $maxPrice)->pluck('serviceID')->toArray();
-            $facilitySearchIds = MassageService::wherein('id', $serviceSearchIds)->pluck('facilityID')->toArray();
+            $facilitySearchIds = MassageService::whereIn('id', $serviceSearchIds)->pluck('facilityID')->toArray();
 
             $query->whereIn('id', $facilitySearchIds);
         }
@@ -128,7 +124,7 @@ class MassageFacilityController extends Controller
         // danh sách các dịch vụ của quán
         $serviceList = MassageService::where('facilityID', '=', $id)->get(['id', 'serviceName', 'serviceDescription']);
 
-        // thêm giá tiền cùng thời gian phục vụ ch cho từng service
+        // thêm giá tiền cùng thời gian phục vụ cho từng service
         foreach ($serviceList as $serviceItem) {
 
             $servicePriceItem = ServicePrice::where('serviceID', '=', $serviceItem->id)
@@ -159,24 +155,11 @@ class MassageFacilityController extends Controller
     // store to database
     public function store(Request $req)
     {
-        // data test
-        // $massageFacility = MassageFacility::create([
-        //     'ownerId' => 6,
-        //     'name' => "test",
-        //     'description' => "test",
-        //     'location' => "test",
-        //     'imageURL' => "test",
-        //     'phoneNumber' => "test",
-        //     'emailAddress' => "test",
-        //     'capacity' => 10,
-        //     'averageRating' => 4.5,
-        // ]);
-
         /**
          * /storage/app/
          * staff: public/staffs/{id_nhanvien}/
          * imageLibrary: public/massageFacilities/{id_quan}/
-         * massageService: public/massageService/{id_service}/
+         * massageService: public/massageServices/{id_service}/
          */
 
         // ví dụ:
@@ -187,13 +170,7 @@ class MassageFacilityController extends Controller
         //     );
         // }
 
-        //return response('ok');
-
-        // lấy data từ request
-        // $ownerID = $req->ownerID;
         $ownerID = $req->user()->id;
-        // return ["0" => $ownerID, "1" => $req->data];
-
         $name = $req->name;
         $description = $req->description;
         $location = $req->location;
@@ -205,7 +182,7 @@ class MassageFacilityController extends Controller
         $massageServiceController = new MassageServiceController();
         $createRequestController = new CreateRequestController();
 
-        //todo lưu thông tin massage facility
+        // lưu thông tin massage facility
         $massageFacility = MassageFacility::create([
             'ownerID' => $ownerID,
             'name' => $name,
@@ -216,13 +193,12 @@ class MassageFacilityController extends Controller
         ]);
 
         // lưu ảnh vào bảng image_librarys
-        $imageLibraryController->store($massageFacility, $req);
-
+        $imageLibraryController->store($req, $massageFacility);
 
         // lưu staff vào bảng staffs
-        foreach ($req->staffList as $staffRequest) {
-            $staffController->store($staffRequest, $massageFacility);
-        }
+        // foreach ($req->staffList as $staffRequest) {
+        //     $staffController->store($staffRequest, $massageFacility);
+        // }
 
 
 
