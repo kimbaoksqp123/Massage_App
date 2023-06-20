@@ -10,7 +10,12 @@ class CreateRequest extends Model
     use HasFactory;
     protected $table = 'create_requests';
     protected $primaryKey = 'id';
-    public $timestamps = false;
+    protected $fillable = [
+        'facilityID',
+        'userID',
+        'requestStatus',
+        'createdDate',
+    ];
 
     // relationships
     public function massage_facility() {

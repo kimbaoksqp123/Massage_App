@@ -10,8 +10,16 @@ class Staff extends Model
     use HasFactory;
     protected $table = 'staffs';
     protected $primaryKey = 'id';
-    protected $fillable = ['name', 'dob','facilityID','gender','jlpt','certificateImage','image','hometown','created_at'];
-    public $timestamps = false;
+    protected $fillable = [
+        'facilityID',
+        'name',
+        'dob',
+        'gender',
+        'jlpt',
+        'certificateImage',
+        'image',
+        'hometown',
+    ];
 
     // relationships
     public function massage_facility() {

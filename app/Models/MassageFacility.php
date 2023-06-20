@@ -11,8 +11,7 @@ class MassageFacility extends Model
 {
     use HasFactory;
     protected $table = 'massage_facilitys';
-    protected $primaryKey = 'id'; 
-    public $timestamps = false;
+    protected $primaryKey = 'id';
     protected $fillable = [
         'ownerID',
         'name',
@@ -21,8 +20,9 @@ class MassageFacility extends Model
         'phoneNumber',
         'emailAddress',
         'capacity',
-        'averageRating'
-        
+        'averageRating',
+        'staffNumber',
+        'isActive',
     ];
 
     // add custom attribute to array & json

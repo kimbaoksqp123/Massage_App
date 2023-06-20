@@ -13,7 +13,6 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
     protected $table = 'users';
     protected $primaryKey = 'id';
-    // public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -30,8 +29,6 @@ class User extends Authenticatable
         'avatarImageUrl',
         'gender',
         'userType',
-        'created_at',
-        'updated_at',
     ];
 
     /**
