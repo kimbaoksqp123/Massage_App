@@ -12,6 +12,7 @@ use App\Models\MassageService;
 use App\Models\ServicePrice;
 use App\Models\User;
 use App\Models\Rating;
+use App\Models\Staff;
 use Illuminate\Http\Request;
 
 class MassageFacilityController extends Controller
@@ -121,6 +122,9 @@ class MassageFacilityController extends Controller
         //danh sách ảnh của 1 quán
         $imgList = ImageLibrary::where('facilityID', '=', $id)->pluck('imageURL')->toArray();
 
+        // danh sách staff của quán
+        $staffList = Staff::where('facilityID', $id)->get()->toArray();
+
         // danh sách các dịch vụ của quán
         $serviceList = MassageService::where('facilityID', '=', $id)->get(['id', 'serviceName', 'serviceDescription']);
 
@@ -147,6 +151,7 @@ class MassageFacilityController extends Controller
             $value['imgList'] = $imgList;
             $value['serviceList'] = $serviceList;
             $value['ratingList'] = $rateList;
+            $value['staffList'] = $staffList;
         }
 
         return $inforFacility;
