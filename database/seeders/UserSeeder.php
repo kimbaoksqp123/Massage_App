@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
         User::factory()->create([
             'username' => 'user1',
             'email' => 'kimbao@gmail.com',
-            'userType' => '1',
+            'userType' => '0',
         ]);
         User::factory()->count(10)->create();
     }
