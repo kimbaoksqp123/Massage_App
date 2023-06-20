@@ -26,7 +26,12 @@ Route::post('/register', [AuthController::class, 'register'])->name('user.regist
 
 
 Route::middleware('auth:sanctum')->prefix('massage-facilities')->group(function () {
+    
+    Route::post('/store', [MassageFacilityController::class, 'store'])
+    ->name('massage-facilities.store');
+});
 
+Route::prefix('massage-facilities')->group(function () {
     Route::get('/', [MassageFacilityController::class, 'index'])
         ->name('massage-facilities.show');
 
@@ -35,7 +40,4 @@ Route::middleware('auth:sanctum')->prefix('massage-facilities')->group(function 
 
     Route::get('/detail/{id}', [MassageFacilityController::class, 'detail'])
         ->name('massage-facilities.detail');
-
-    Route::post('/store', [MassageFacilityController::class, 'store'])
-        ->name('massage-facilities.store');
 });

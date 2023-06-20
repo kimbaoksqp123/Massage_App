@@ -16,12 +16,11 @@ class StaffController extends Controller
             [
                 'facilityID' => $massage_facility->id,
                 'name' => $staff_request['name'],
-                // 'name' => $staff_request->name,)
                 'dob'  => date("Y-m-d H:i:s", strtotime($staff_request['DOB'])),
                 'gender'  => $staff_request['gender'],
                 'jlpt'  => $staff_request['jlpt'],
-                // 'certificateImage' => $staff_request->certificateImage->store('staffs'),
-                // 'image'  => $staff_request->image->store('staffs'),
+                // 'certificateImage' => $staff_request['certificateImage']->store('staffs'),
+                // 'image'  => $staff_request['image']->store('staffs'),
                 'hometown'  => $staff_request['hometown'],
                
             ]
@@ -30,11 +29,14 @@ class StaffController extends Controller
         //Lay ra id staff
         $staff_id = $staff->id;
         //Rename Filename : Staff_{id}_certificate
-        $certificateImage = 'Staff_'.$staff_id.'_certificate'.$staff_request->file('certificateImage')->getClientOriginalExtension();
-        //Store File : path = "app/public/staffs/{id}"
-        $staff->certificateImage = $staff_request->file('certificateImage')->store($staff_id,'staffs');
-        $image = 'staff_'.$staff_id.'_avatar'.$staff_request->file('image')->getClientOriginalExtension();
-        $staff->image = $staff_request->file('image')->store($staff_id,'staffs');
+        $certificateImage = 'Staff_'.$staff_id.'_certificate'.$staff_request['certificateImage']->getClientOriginalExtension();
+        // //Store File : path = "app/public/staffs/{id}"
+        $image = 'staff_'.$staff_id.'_avatar'.$staff_request['image']->getClientOriginalExtension();
+        // $staff->image = $staff_request->file('image')->store($staff_id,'staffs');
+        $url = "public/staffs/$staff_id/";
+        // $formatFile = $staff_request['certificateImage']->getClientOriginalExtension();
+        $staff->certificateImage = $staff_request['certificateImage']->storeAs($url,$certificateImage);
+        $staff->image = $staff_request['certificateImage']->storeAs($url,$image);
         $staff->save();
         }
 }
