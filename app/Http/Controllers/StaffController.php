@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Staff;
 use App\Models\MassageFacility ;
 use DateTime;
+use Illuminate\Support\Carbon;
 
 class StaffController extends Controller
 {
@@ -16,11 +17,9 @@ class StaffController extends Controller
             [
                 'facilityID' => $massage_facility->id,
                 'name' => $staff_request['name'],
-                'dob'  => date("Y-m-d H:i:s", strtotime($staff_request['DOB'])),
+                'dob'  => Carbon::createFromFormat('d/m/Y', $staff_request['DOB']),
                 'gender'  => $staff_request['gender'],
                 'jlpt'  => $staff_request['jlpt'],
-                // 'certificateImage' => $staff_request['certificateImage']->store('staffs'),
-                // 'image'  => $staff_request['image']->store('staffs'),
                 'hometown'  => $staff_request['hometown'],
                
             ]
