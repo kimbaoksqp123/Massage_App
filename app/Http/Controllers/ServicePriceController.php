@@ -12,8 +12,8 @@ class ServicePriceController extends Controller
     public function store($massageServiceId, $price) {
         ServicePrice::create([
             'serviceID' => $massageServiceId,
-            'price' => $price->price,
-            'durationTime' => $price->durationTime,
+            'price' => $price['price'],
+            'durationTime' => $price['duration'],
         ]);
     }
 }

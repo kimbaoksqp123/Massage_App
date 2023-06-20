@@ -126,7 +126,7 @@ class MassageFacilityController extends Controller
         $staffList = Staff::where('facilityID', $id)->get()->toArray();
 
         // danh sách các dịch vụ của quán
-        $serviceList = MassageService::where('facilityID', '=', $id)->get(['id', 'serviceName', 'serviceDescription']);
+        $serviceList = MassageService::where('facilityID', '=', $id)->get(['id', 'serviceName', 'serviceDescription', 'imageURL AS serviceImg']);
 
         // thêm giá tiền cùng thời gian phục vụ cho từng service
         foreach ($serviceList as $serviceItem) {

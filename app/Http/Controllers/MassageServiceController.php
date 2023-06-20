@@ -14,9 +14,9 @@ class MassageServiceController extends Controller
         // Lấy thông tin service, lưu vào bảng massage_services
         $massageService = MassageService::create([
             'facilityID' => $masageFacility->id,
-            'serviceName' => $service->serviceName,
-            'serviceDescription' => $service->serviceDescription,
-            'availabilityStatus' => $service->availabilityStatus,
+            'serviceName' => $service['serviceName'],
+            'serviceDescription' => $service['serviceDescription'],
+            'availabilityStatus' => 1,
         ]);
 
         // Lưu ảnh và lấy đường dẫn lưu vào database
@@ -33,9 +33,9 @@ class MassageServiceController extends Controller
         // Lưu thông tin giá vào bảng service_prices
         $servicePriceController = new ServicePriceController();
 
-        if ($service->__isset('priceList') && !empty($service->priceList)) {
+        if (isset($service['priceList']) && !empty($service['priceList'])) {
 
-            foreach ($service->priceList as $price) {
+            foreach ($service['priceList'] as $price) {
                 $servicePriceController->store($massageService->id, $price);
             }
         }

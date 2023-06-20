@@ -38,8 +38,9 @@ class MassageFacility extends Model
 
     protected function imageUrl(): CastsAttribute {
 
+        $firstImageLibrary = $this->image_librarys()->first();
         return new CastsAttribute(
-            get: fn () => $this->image_librarys()->first()->imageURL,
+            get: fn () => $firstImageLibrary ? $firstImageLibrary->imageURL : 'img\img_01_01.jpg',
         );
     }
 
