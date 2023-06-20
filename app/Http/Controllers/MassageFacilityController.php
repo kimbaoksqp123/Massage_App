@@ -188,19 +188,11 @@ class MassageFacilityController extends Controller
         }
 
         // lưu service và giá vào bảng massage_services và bảng service_prices
-        if ($req->__isset('serviceList') && !empty($req->serviceList)
-            && $req->__isset('serviceImgList') && !empty($req->file('serviceImgList'))) {
+        if ($req->__isset('serviceList') && !empty($req->serviceList)) {
 
             $services = $req->serviceList;
-            $serviceImages = $req->file('serviceImgList');
-
-            $count = 0;
             foreach ($services as $service) {
-                $massageServiceController->store(
-                    $service,
-                    $serviceImages[$count],
-                    $massageFacility
-                );
+                $massageServiceController->store($service, $massageFacility);
             }
         }
 
