@@ -9,15 +9,15 @@ use App\Models\ServicePrice;
 
 class MassageServiceController extends Controller
 {
-    public function store(Request $req, $masageFacility) {
+    public function store($service, $masageFacility) {
 
-        //Nhan thong tin va luu vao bang MassageService        
-        $massageService = MassageService::create([
+        //Nhan thong tin va luu vao bang MassageService
+        $data = [
             'facilityID' => $masageFacility->id,
-            'serviceName' => $req->serviceName,
-            'serviceDescription' => $req->serviceDescription,
-            'availabilityStatus' => $req->availabilityStatus,
-        ]);
+            'serviceName' => $service->serviceName,
+            'serviceDescription' => $service->serviceDescription,
+            'availabilityStatus' => $service->availabilityStatus,
+        ];
         //Store File: path = "/public/massageService"
             // $service_id = $massageService->id;
             // $facility_id = $masageFacility->id;
@@ -34,7 +34,5 @@ class MassageServiceController extends Controller
         // lưu thông tin giá vào bảng service_prices
         $servicePriceController = new ServicePriceController();
         $servicePriceController->store($req,$masageFacility);
-        
-        return response('ok');
     }
 }

@@ -16,21 +16,32 @@ class ImageLibraryController extends Controller
         $url = "massageFacilities/$massageFacility->id/";
         $count = 0;
 
-        foreach ($req->file('imageLibrary') as $file) {
-
-            // Lưu file vào storage
-            $formatFile = $file->getClientOriginalExtension();
-            $file->storeAs($url, $count + 1 . ".$formatFile", 'public_uploads');
-
-            // Tạo data để thực hiện câu query
-            $data[] = [
-                'facilityID' => $massageFacility->id,
-                'imageURL' => 'uploads/' . $url . $count + 1 . ".$formatFile",
-            ];
-
-            $count++;
+        if (!Storage::disk('public_uploads')->exists($url)) {
+            Storage::disk('public_uploads')->makeDirectory($url);
         }
 
-        $massageFacility->image_librarys()->insert($data);
+        if ($req->__isset('imageLibrary')) {
+            $imageLibraryFiles = $req->file('imageLibrary');
+        }
+
+        if (!empty($imageLibraryFiles)) {
+
+            foreach ($imageLibraryFiles as $file) {
+    
+                // Lưu file vào storage
+                $formatFile = $file->getClientOriginalExtension();
+                $file->storeAs($url, $count + 1 . ".$formatFile", 'public_uploads');
+    
+                // Tạo data để thực hiện câu query
+                $data[] = [
+                    'facilityID' => $massageFacility->id,
+                    'imageURL' => 'uploads/' . $url . $count + 1 . ".$formatFile",
+                ];
+    
+                $count++;
+            }
+
+            $massageFacility->image_librarys()->insert($data);
+        }
     }
 }

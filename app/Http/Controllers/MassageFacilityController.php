@@ -156,10 +156,10 @@ class MassageFacilityController extends Controller
     public function store(Request $req)
     {
         /**
-         * /storage/app/
-         * staff: public/staffs/{id_nhanvien}/
-         * imageLibrary: public/massageFacilities/{id_quan}/
-         * massageService: public/massageServices/{id_service}/
+         * public/uploads/
+         * staff: staffs/{id_nhanvien}/
+         * imageLibrary: massageFacilities/{id_quan}/
+         * massageService: massageServices/{id_service}/
          */
 
         // ví dụ:
@@ -170,6 +170,11 @@ class MassageFacilityController extends Controller
         //     );
         // }
 
+        $imageLibraryController = new ImageLibraryController();
+        $staffController = new StaffController();
+        $massageServiceController = new MassageServiceController();
+        $createRequestController = new CreateRequestController();
+
         $ownerID = $req->user()->id;
         $name = $req->name;
         $description = $req->description;
@@ -177,10 +182,6 @@ class MassageFacilityController extends Controller
         $phoneNumber = $req->phoneNumber;
         $emailAddress = $req->emailAddress;
 
-        $imageLibraryController = new ImageLibraryController();
-        $staffController = new StaffController();
-        $massageServiceController = new MassageServiceController();
-        $createRequestController = new CreateRequestController();
 
         // lưu thông tin massage facility
         $massageFacility = MassageFacility::create([
@@ -196,18 +197,18 @@ class MassageFacilityController extends Controller
         $imageLibraryController->store($req, $massageFacility);
 
         // lưu staff vào bảng staffs
-        // foreach ($req->staffList as $staffRequest) {
-        //     $staffController->store($staffRequest, $massageFacility);
-        // }
-
-
+        foreach ($req->staffList as $staffRequest) {
+            $staffController->store($staffRequest, $massageFacility);
+        }
 
         // lưu service và giá vào bảng massage_services và bảng service_prices
-        // $massageServiceController->store($req,$massageFacility);
+        // foreach ($req->serviceList as $service) {
+        //     $massageServiceController->store($service, $massageFacility);
+        // }
 
         // tạo create request tương ứng với massage facility hiện tại,
         // và lưu vào bảng create_requests
-        // $createRequestController->store($massageFacility->id, $massageFacility->ownerID);
+        $createRequestController->store($massageFacility->id, $massageFacility->ownerID);
 
         return response('ok');
     }

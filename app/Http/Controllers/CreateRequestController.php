@@ -14,6 +14,7 @@ class CreateRequestController extends Controller
             'facilityID' => $massageFacilityID,
             'userID' => $ownerID,
             'requestStatus' => 1,
+            'createdDate' => date('Y-m-d H:i:s'),
         ]);
     }
 }
