@@ -14,6 +14,11 @@ class UserSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'userType' => '2',
         ]);
+        User::factory()->create([
+            'username' => 'owner1',
+            'email' => 'tuanchibi@gmail.com',
+            'userType' => '1',
+        ]);
         User::factory()->count(10)->create();
     }
 }
