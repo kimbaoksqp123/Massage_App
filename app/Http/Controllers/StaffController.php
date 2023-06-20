@@ -36,7 +36,7 @@ class StaffController extends Controller
         $url = "public/staffs/$staff_id";
         // $formatFile = $staff_request['certificateImage']->getClientOriginalExtension();
         $staff->certificateImage = $staff_request['certificateImage']->storeAs($url,$certificateImage);
-        $staff->image = $staff_request['certificateImage']->storeAs($url,$image);
+        $staff->image = $staff_request['image']->storeAs($url,$image);
         $staff->save();
         }
 }
