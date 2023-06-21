@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Attribute;
+use Illuminate\Database\Eloquent\Casts\Attribute as CastsAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,20 +11,40 @@ class MassageFacility extends Model
 {
     use HasFactory;
     protected $table = 'massage_facilitys';
-    protected $primaryKey = 'id'; 
-    public $timestamps = false;
+    protected $primaryKey = 'id';
     protected $fillable = [
-        'ownerId',
+        'ownerID',
         'name',
         'description',
         'location',
-        'imageURL',
         'phoneNumber',
         'emailAddress',
         'capacity',
-        'averageRating'
-        
+        'averageRating',
+        'staffNumber',
+        'isActive',
     ];
+
+    // add custom attribute to array & json
+    protected $appends = ['review_count', 'image_url'];
+
+    // accessors
+    protected function reviewCount(): CastsAttribute {
+
+        return new CastsAttribute(
+            get: fn () => $this->ratings()->count(),
+        );
+    }
+
+    protected function imageUrl(): CastsAttribute {
+
+        $firstImageLibrary = $this->image_librarys()->first();
+        return new CastsAttribute(
+            get: fn () => $firstImageLibrary ? $firstImageLibrary->imageURL : 'img\img_01_01.jpg',
+        );
+    }
+
+    // relationships
     public function user()
     {
         return $this->belongsTo(User::class, 'ownerID', 'id');
@@ -43,4 +65,11 @@ class MassageFacility extends Model
         return $this->hasMany(Rating::class, 'facilityID', 'id');
     }
 
+    public function staffs() {
+        return $this->hasMany(Staff::class, 'facilityID', 'id');
+    }
+
+    public function create_request() {
+        return $this->hasOne(CreateRequest::class, 'facilityID', 'id');
+    }
 }

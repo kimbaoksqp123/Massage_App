@@ -12,8 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     protected $table = 'users';
-    protected $primaryKey = 'id'; 
-    // public $timestamps = false;
+    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
@@ -27,10 +26,9 @@ class User extends Authenticatable
         'phoneNumber',
         'fullname',
         'age',
+        'avatarImageUrl',
         'gender',
         'userType',
-        'created_at',
-        'updated_at',         
     ];
 
     /**
@@ -53,9 +51,9 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function massage_facilitys()
+    public function massage_facility()
     {
-        return $this->hasMany(MassageFacility::class, 'ownerID', 'id');
+        return $this->hasOne(MassageFacility::class, 'ownerID', 'id');
     }
 
     public function bookings()
@@ -68,4 +66,7 @@ class User extends Authenticatable
         return $this->hasMany(Rating::class, 'userID', 'id');
     }
 
+    public function create_requests() {
+        return $this->hasMany(CreateRequest::class, 'userID', 'id');
+    }
 }

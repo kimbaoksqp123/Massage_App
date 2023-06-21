@@ -5,19 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ImageLibrary extends Model
+class CreateRequest extends Model
 {
     use HasFactory;
-    protected $table = 'image_librarys';
+    protected $table = 'create_requests';
     protected $primaryKey = 'id';
     protected $fillable = [
         'facilityID',
-        'imageURL',
+        'userID',
+        'requestStatus',
+        'createdDate',
     ];
 
     // relationships
-    public function massage_facility()
-    {
+    public function massage_facility() {
         return $this->belongsTo(MassageFacility::class, 'facilityID', 'id');
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class, 'userID', 'id');
     }
 }

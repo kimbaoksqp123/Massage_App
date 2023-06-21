@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\MassageService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -14,16 +15,15 @@ class MassageServiceSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('massage_services')->insert([
-            //facility 1: Serena Spa
+        // Khi insert thêm dữ liệu thì "count" +1
+        // Cần làm cách này để sử dụng afterCreate bên factory
+        MassageService::factory()->count(35)->sequence(
             [
                 'facilityID' => 1,
                 'serviceName' => '感覚を目覚めさせて',
                 'serviceDescription' => 'ハーブフットバス、角質除去、顔の若返り',
-                'price' => 1380000,
-                'availabilityStatus'=> 1,
-                'imageURL' => 'img/img_service/img_service_01_01',
-                'serviceDuration' => 120,
+                'availabilityStatus' => 1,
+                'imageURL' => 'img/img_service/img_service_01_01.jpg',
             ],
             [
                 'facilityID' => 1,
