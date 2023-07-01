@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MassageFacilityController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,13 +33,19 @@ Route::prefix('massage-facilities')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->prefix('user')->group(function () {
-    
+
     Route::get('/', [AuthController::class, 'user']);
     Route::get('/logout', [AuthController::class, 'logout']);
 });
 
 Route::middleware('auth:sanctum')->prefix('massage-facilities')->group(function () {
-    
+
     Route::post('/store', [MassageFacilityController::class, 'store'])
         ->name('massage-facilities.store');
+});
+
+
+Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
+
+    Route::post('/search', [AdminController::class, 'search'])->name('admin.searchByName');
 });

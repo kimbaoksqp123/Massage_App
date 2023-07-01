@@ -28,7 +28,7 @@ class MassageFacilitySeeder extends Seeder
                 'averageRating' => 4.5,
                 // 'created_at' => '1/2/3',
                 // // 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-
+                'isActive' => 1,
             ],
 
             [
@@ -41,6 +41,7 @@ class MassageFacilitySeeder extends Seeder
                 'emailAddress' => 'hanoilabelleviespa@gmail.com',
                 'capacity' => 100,
                 'averageRating' => 4.9,
+                'isActive' => 1,
             ],
 
             [
@@ -53,6 +54,7 @@ class MassageFacilitySeeder extends Seeder
                 'emailAddress' => 'booking@lessencespacom',
                 'capacity' => 50,
                 'averageRating' => 5,
+                'isActive' => 1,
             ],
 
             [
@@ -65,6 +67,7 @@ class MassageFacilitySeeder extends Seeder
                 'emailAddress' => 'mamay@laspas.vn',
                 'capacity' => 60,
                 'averageRating' => 4.9,
+                'isActive' => 1,
             ],
 
             [
@@ -77,6 +80,7 @@ class MassageFacilitySeeder extends Seeder
                 'emailAddress' => 'booking@omamorispa.com',
                 'capacity' => 100,
                 'averageRating' => 4.8,
+                'isActive' => 1,
             ],
         ]);
         //
