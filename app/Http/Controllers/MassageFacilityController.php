@@ -107,6 +107,9 @@ class MassageFacilityController extends Controller
             $query->where('averageRating', '>=', $minRate)->where('averageRating', '<=', $maxRate);
         }
 
+        // active is 1
+        $query->where('isActive', 1);
+
 
         return [
             'result' => MassageFacilityResource::collection($query->get()),
@@ -116,7 +119,7 @@ class MassageFacilityController extends Controller
     // show detail
     public function detail($id)
     {
-        $inforFacility = MassageFacility::where('id', '=', $id)
+        $inforFacility = MassageFacility::where('id', '=', $id)->where('isActive', 1)
             ->get(['id', 'name', 'phoneNumber AS phone', 'location AS address', 'description']);
 
         //danh sách ảnh của 1 quán
