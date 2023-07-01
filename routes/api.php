@@ -51,6 +51,7 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::post('/request/accept', [AdminController::class, 'requestAccept'])->name('admin.requestAccept');
     Route::post('/request/deny', [AdminController::class, 'requestDeny'])->name('admin.requestDeny');
 
-    Route::post('/search', [AdminController::class, 'search'])->name('admin.searchByName');
+    Route::post('/filter', [AdminController::class, 'filter'])
+        ->name('admin.filter');
 
 });
