@@ -18,15 +18,35 @@ use App\Models\Staff;
 
 class AdminController extends Controller
 {
-    public function request() {
-        $requestOpenList = CreateRequest::get([
+    public function requestNotReview() {
+        $requestOpenList = CreateRequest::where('requestStatus', 0)->get([
             'id as requestID', 'facilityID', 'requestStatus as status', 'createdDate', 'userID'
         ]);
 
         foreach ($requestOpenList as $requestOpen) {
             $user = User::where('id', $requestOpen->userID)->first();
-            // return $user;
+
+            $facility = MassageFacility::where('id', $requestOpen->facilityID)->first();
+
             $requestOpen['username'] = $user->username;
+            $requestOpen['facilityName'] = $facility->name;
+        }
+
+        return $requestOpenList;
+    }
+
+    public function requestReviewed() {
+        $requestOpenList = CreateRequest::where('requestStatus', 1)->orWhere('requestStatus', 2)->get([
+            'id as requestID', 'facilityID', 'requestStatus as status', 'createdDate', 'userID'
+        ]);
+
+        foreach ($requestOpenList as $requestOpen) {
+            $user = User::where('id', $requestOpen->userID)->first();
+
+            $facility = MassageFacility::where('id', $requestOpen->facilityID)->first();
+
+            $requestOpen['username'] = $user->username;
+            $requestOpen['facilityName'] = $facility->name;
         }
 
         return $requestOpenList;

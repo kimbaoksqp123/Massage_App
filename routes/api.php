@@ -47,7 +47,8 @@ Route::middleware('auth:sanctum')->prefix('massage-facilities')->group(function 
 
 Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
 
-    Route::get('/request', [AdminController::class, 'request'])->name('admin.request');
+    Route::get('/requestNotReview', [AdminController::class, 'requestNotReview'])->name('admin.requestNotReview');
+    Route::get('/requestReviewed', [AdminController::class, 'requestReviewed'])->name('admin.requestReviewed');
     Route::post('/request/accept', [AdminController::class, 'requestAccept'])->name('admin.requestAccept');
     Route::post('/request/deny', [AdminController::class, 'requestDeny'])->name('admin.requestDeny');
 
