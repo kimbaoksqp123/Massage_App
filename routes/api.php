@@ -47,5 +47,7 @@ Route::middleware('auth:sanctum')->prefix('massage-facilities')->group(function 
 
 Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
 
+    Route::get('/request', [AdminController::class, 'request'])->name('admin.request');
     Route::post('/search', [AdminController::class, 'search'])->name('admin.searchByName');
+
 });

@@ -24,7 +24,7 @@ class MassageFacilityController extends Controller
         $minPriceAllFacility = ServicePrice::orderBy('price', 'asc')->first()->price;
         $maxPriceAllFacility = ServicePrice::orderBy('price', 'desc')->first()->price;
 
-        $MassageFacilities = MassageFacilityResource::collection(MassageFacility::all());
+        $MassageFacilities = MassageFacilityResource::collection(MassageFacility::where('isActive', 1)->get());
         $MassageServices = MassageService::select('serviceName')->groupBy('serviceName')->get();
 
         return [
