@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\CreateRequest;
 use App\Models\User;
+use App\Models\MassageFacility;
+
 
 
 class AdminController extends Controller
@@ -25,5 +27,41 @@ class AdminController extends Controller
         }
 
         return $requestOpenList;
+    }
+
+    public function requestAccept(Request $req) {
+        $requestOpenFacility = CreateRequest::where('id', $req->requestID)->first();
+
+        // trả về fail nếu quán đã được accept
+        if($requestOpenFacility->requestStatus == 1) {
+            return "fail";
+        }
+
+        $requestOpenFacility->requestStatus = 1;
+        $requestOpenFacility->save();
+
+        $massageFacility = MassageFacility::where('id', $requestOpenFacility->facilityID)->first();
+        // return $massageFacility;
+        $massageFacility->isActive = 1;
+        $massageFacility->save();
+
+        return "success";
+
+    }
+
+    public function requestDeny(Request $req) {
+        $requestOpenFacility = CreateRequest::where('id', $req->requestID)->first();
+
+        // trả về fail nếu quán đã được xét
+
+        if($requestOpenFacility->requestStatus != 0) {
+            return "fail";
+        }
+
+        $requestOpenFacility->requestStatus = 2;
+        $requestOpenFacility->save();
+
+        return "success";
+
     }
 }

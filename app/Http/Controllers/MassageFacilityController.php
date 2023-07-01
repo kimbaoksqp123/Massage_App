@@ -180,6 +180,7 @@ class MassageFacilityController extends Controller
             'location' => $location,
             'phoneNumber' => $phoneNumber,
             'emailAddress' => $emailAddress,
+            'isActive' => 0,
         ]);
 
         // lưu ảnh vào bảng image_librarys
