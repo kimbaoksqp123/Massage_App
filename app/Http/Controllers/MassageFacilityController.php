@@ -141,19 +141,14 @@ class MassageFacilityController extends Controller
 
         // TODO: thêm avatar cho user
         // thêm rating cho quán
-        $rateList = Rating::where('facilityID', '=', $id)->get(['id AS ratingID', 'userID', 'comment', 'commentVoteup AS rate']);
-
-        foreach ($rateList as $rateItem) {
-            $userInfo = User::where('id', '=', $rateItem->userID)->get(['username', 'avatarImageUrl'])->first();
-            $rateItem['username'] = $userInfo['username'];
-            $rateItem['avatarImageUrl'] = $userInfo['avatarImageUrl'];
-        }
+        $ratingController = new RatingController();
+        $rateList = $ratingController->index($id);
 
         foreach ($inforFacility as $value) {
 
             $value['imgList'] = $imgList;
             $value['serviceList'] = $serviceList;
-            $value['ratingList'] = $rateList;
+            $value['ratingList'] = $rateList['ratingList'];
             $value['staffList'] = $staffList;
         }
 

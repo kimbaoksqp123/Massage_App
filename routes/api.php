@@ -3,6 +3,7 @@
 use App\Http\Controllers\MassageFacilityController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RatingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +45,17 @@ Route::middleware('auth:sanctum')->prefix('massage-facilities')->group(function 
         ->name('massage-facilities.store');
 });
 
+Route::middleware('auth:sanctum')->prefix('ratings')->group(function () {
+
+    Route::post('/store', [RatingController::class, 'store'])
+        ->name('ratings.store');
+});
+
+Route::prefix('ratings')->group(function () {
+
+    Route::get('/index/{facilityID}/{page?}', [RatingController::class, 'index'])
+        ->name('ratings.index');
+});
 
 Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
 
@@ -53,5 +65,4 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
 
     Route::post('/filter', [AdminController::class, 'filter'])
         ->name('admin.filter');
-
 });
