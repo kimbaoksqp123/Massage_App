@@ -18,7 +18,7 @@ use App\Models\Staff;
 
 class AdminController extends Controller
 {
-    public function requestNotReview() {
+    public function requestNotActive() {
         $requestOpenList = CreateRequest::where('requestStatus', 0)->orWhere('requestStatus', 2)->get([
             'id as requestID', 'facilityID', 'requestStatus as status', 'createdDate', 'userID'
         ]);
@@ -35,7 +35,7 @@ class AdminController extends Controller
         return $requestOpenList;
     }
 
-    public function requestReviewed() {
+    public function requestActive() {
         $requestOpenList = CreateRequest::where('requestStatus', 1)->get([
             'id as requestID', 'facilityID', 'requestStatus as status', 'createdDate', 'userID'
         ]);
@@ -164,5 +164,17 @@ class AdminController extends Controller
         return [
             'result' => MassageFacilityResource::collection($query->get()),
         ];
+    }
+
+    public function removeFacility(Request $req) {
+        $facility = MassageFacility::where('id', $req->facilityID)->first();
+
+        if($facility->isActive == 0) {
+            return "fail";
+        }
+        $facility->isActive = 0;
+        $facility->save();
+
+        return "success";
     }
 }
