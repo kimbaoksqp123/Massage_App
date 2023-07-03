@@ -68,5 +68,10 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::post('/filter', [AdminController::class, 'filter'])
         ->name('admin.filter');
 
+    Route::post('/deactiveFacility', [AdminController::class, 'deactiveFacility'])->name('admin.deactiveFacility');
+
+    Route::post('/activeFacility', [AdminController::class, 'activeFacility'])->name('admin.activeFacility');
+
     Route::post('/removeFacility', [AdminController::class, 'removeFacility'])->name('admin.removeFacility');
+
 });

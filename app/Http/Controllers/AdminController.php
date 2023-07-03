@@ -166,7 +166,7 @@ class AdminController extends Controller
         ];
     }
 
-    public function removeFacility(Request $req) {
+    public function deactiveFacility(Request $req) {
         $facility = MassageFacility::where('id', $req->facilityID)->first();
 
         if($facility->isActive == 0) {
@@ -174,6 +174,32 @@ class AdminController extends Controller
         }
         $facility->isActive = 0;
         $facility->save();
+
+        return "success";
+    }
+
+    public function activeFacility(Request $req) {
+        $facility = MassageFacility::where('id', $req->facilityID)->first();
+
+        if($facility->isActive == 1) {
+            return "fail";
+        }
+        $facility->isActive = 1;
+        $facility->save();
+
+        return "success";
+    }
+
+    public function removeFacility(Request $req) {
+        $facility = MassageFacility::where('id', $req->facilityID)->first();
+
+        $facility->isActive = 0;
+        $facility->save();
+
+        $requestOpenFacility = CreateRequest::find($req->requestID);
+        // return $requestOpenFacility;
+        $requestOpenFacility->requestStatus = 2;
+        $requestOpenFacility->save();
 
         return "success";
     }
