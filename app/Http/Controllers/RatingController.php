@@ -16,6 +16,7 @@ class RatingController extends Controller
         // lấy comment
         $ratings = Rating::with('user')
             ->where('facilityID', $facilityID)
+            ->orderBy('created_at', 'asc')
             ->forPage($page, self::PER_PAGE)
             ->get([
                 'id AS ratingId',
