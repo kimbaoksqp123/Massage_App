@@ -30,7 +30,7 @@ class AdminController extends Controller
 
         // Danh sách massage service
         $massageServices = MassageService::get();
-        $massageServices->unique('serviceName')->pluck('serviceName')->toArray();
+        $massageServices = $massageServices->unique('serviceName')->pluck('serviceName')->toArray();
 
         return [
             'result' => $massageFacilities,
