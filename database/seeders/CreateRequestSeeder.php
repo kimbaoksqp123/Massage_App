@@ -13,6 +13,5 @@ class CreateRequestSeeder extends Seeder
      */
     public function run(): void
     {
-        CreateRequest::factory(5)->create();
     }
 }
