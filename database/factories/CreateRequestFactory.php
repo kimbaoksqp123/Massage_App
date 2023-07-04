@@ -24,7 +24,7 @@ class CreateRequestFactory extends Factory
             'facilityID' => $this->faker->randomElement($facilityIds),
             'userID' => $this->faker->randomElement($userIds),
             'requestStatus' => $this->faker->randomElement([0,1,2]),
-            'createdDate' => new Carbon('2023-07-03'),
+            'createdDate' => Carbon::now()->format('Y-m-d'),
         ];
     }
 }

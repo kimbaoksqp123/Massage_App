@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             ImageLibrarySeeder::class,
             RatingSeeder::class,
             MassageServiceSeeder::class,
+            CreateRequestSeeder::class
         ]);
     }
 }
