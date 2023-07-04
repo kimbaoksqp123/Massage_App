@@ -24,6 +24,9 @@ class RatingController extends Controller
                 'commentVoteup AS rate'
             ]);
 
+        // lấy tổng số comment
+        $ratingCount = Rating::where('facilityID', $facilityID)->count();
+
         // thêm thông tin user
         foreach ($ratings as $rating) {
             $rating['userName'] = $rating->user->username;
@@ -34,7 +37,8 @@ class RatingController extends Controller
 
         // trả về
         return [
-            'ratingList' => $ratings
+            'ratingList' => $ratings,
+            'review_count' => $ratingCount
         ];
     }
 
