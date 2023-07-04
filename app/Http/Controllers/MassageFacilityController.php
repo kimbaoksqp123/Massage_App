@@ -21,11 +21,18 @@ class MassageFacilityController extends Controller
     public function index()
     {
         // lấy giá tiền của service rẻ nhất và đắt nhất
-        $minPriceAllFacility = ServicePrice::orderBy('price', 'asc')->first()->price;
-        $maxPriceAllFacility = ServicePrice::orderBy('price', 'desc')->first()->price;
+        $minPriceAllFacility = ServicePrice::with(['massage_service' => function ($query) {
+            $query->where('isActive', 1);
+        }])->orderBy('price', 'asc')->first()->price;
+
+        $maxPriceAllFacility = ServicePrice::with(['massage_service' => function ($query) {
+            $query->where('isActive', 1);
+        }])->orderBy('price', 'desc')->first()->price;
 
         $MassageFacilities = MassageFacilityResource::collection(MassageFacility::where('isActive', 1)->get());
-        $MassageServices = MassageService::select('serviceName')->groupBy('serviceName')->get();
+        $MassageServices = MassageService::with(['massage_service' => function ($query) {
+            $query->where('isActive', 1);
+        }])->select('serviceName')->groupBy('serviceName')->get();
 
         return [
             'result' => $MassageFacilities,
@@ -41,6 +48,9 @@ class MassageFacilityController extends Controller
 
         // instantiate query
         $query = MassageFacility::query();
+
+        // quán đang hoạt động
+        $query->where('isActive', 1);
 
         // name, address
         if ($req->__isset('input')) {
@@ -106,10 +116,6 @@ class MassageFacilityController extends Controller
 
             $query->where('averageRating', '>=', $minRate)->where('averageRating', '<=', $maxRate);
         }
-
-        // active is 1
-        $query->where('isActive', 1);
-
 
         return [
             'result' => MassageFacilityResource::collection($query->get()),
