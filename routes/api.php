@@ -58,12 +58,20 @@ Route::prefix('ratings')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
-
-    Route::get('/requestNotReview', [AdminController::class, 'requestNotReview'])->name('admin.requestNotReview');
-    Route::get('/requestReviewed', [AdminController::class, 'requestReviewed'])->name('admin.requestReviewed');
+    // phê duyệt yêu cầu mở quán massage
+    Route::get('/requestNotActive', [AdminController::class, 'requestNotActive'])->name('admin.requestNotActive');
+    Route::get('/requestActive', [AdminController::class, 'requestActive'])->name('admin.requestActive');
     Route::post('/request/accept', [AdminController::class, 'requestAccept'])->name('admin.requestAccept');
     Route::post('/request/deny', [AdminController::class, 'requestDeny'])->name('admin.requestDeny');
 
+    // tìm kiếm quán massage
     Route::post('/filter', [AdminController::class, 'filter'])
         ->name('admin.filter');
+
+    Route::post('/deactiveFacility', [AdminController::class, 'deactiveFacility'])->name('admin.deactiveFacility');
+
+    Route::post('/activeFacility', [AdminController::class, 'activeFacility'])->name('admin.activeFacility');
+
+    Route::post('/removeFacility', [AdminController::class, 'removeFacility'])->name('admin.removeFacility');
+
 });
