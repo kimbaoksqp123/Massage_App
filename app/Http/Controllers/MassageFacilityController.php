@@ -49,7 +49,7 @@ class MassageFacilityController extends Controller
             }
         }
 
-        $massageServices->unique('serviceName')->pluck('serviceName')->toArray();
+        $massageServices = $massageServices->unique('serviceName')->pluck('serviceName')->toArray();
 
         return [
             'result' => $massageFacilities,
