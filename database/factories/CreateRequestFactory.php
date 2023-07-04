@@ -21,8 +21,8 @@ class CreateRequestFactory extends Factory
         $facilityIds = MassageFacility::all()->pluck('id')->toArray();
         $userIds = user::whereNot('id', 1)->pluck('id')->toArray();
         return [
-            'facilityID' => $this->faker->randomElement($facilityIds),
-            'userID' => $this->faker->randomElement($userIds),
+            'facilityID' => $this->faker->unique()->randomElement($facilityIds),
+            'userID' => $this->faker->unique()->randomElement($userIds),
             'requestStatus' => $this->faker->randomElement([0,1,2]),
             'createdDate' => Carbon::now()->format('Y-m-d'),
         ];
