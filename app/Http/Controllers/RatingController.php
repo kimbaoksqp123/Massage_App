@@ -60,6 +60,8 @@ class RatingController extends Controller
         $rating->commentVoteup = $commentVoteup;
 
         if ($rating->save()) {
+            $massageFacilityController = new MassageFacilityController();
+            $massageFacilityController->updateAvarageRating($facilityID);
             return response('ok');
         } else {
             return response('can not store to database', 500);
