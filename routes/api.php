@@ -58,6 +58,10 @@ Route::prefix('ratings')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
+
+    Route::get('/', [AdminController::class, 'index'])
+        ->name('admin.index');
+
     // phê duyệt yêu cầu mở quán massage
     Route::get('/requestNotActive', [AdminController::class, 'requestNotActive'])->name('admin.requestNotActive');
     Route::get('/requestActive', [AdminController::class, 'requestActive'])->name('admin.requestActive');

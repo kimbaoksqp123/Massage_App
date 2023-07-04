@@ -18,6 +18,28 @@ use App\Models\Staff;
 
 class AdminController extends Controller
 {
+    public function index()
+    {
+        // lấy giá tiền của service rẻ nhất và đắt nhất
+        $servicePrices = ServicePrice::orderBy('price', 'asc')->get();
+        $minPriceAllFacility = $servicePrices->first()->price;    
+        $maxPriceAllFacility = $servicePrices->last()->price;
+
+        // Danh sách toàn bộ cơ sở massage
+        $massageFacilities = MassageFacilityResource::collection(MassageFacility::get());
+
+        // Danh sách massage service
+        $massageServices = MassageService::get();
+        $massageServices->unique('serviceName')->pluck('serviceName')->toArray();
+
+        return [
+            'result' => $massageFacilities,
+            'serviceList' => $massageServices,
+            'minPrice' => $minPriceAllFacility,
+            'maxPrice' => $maxPriceAllFacility,
+        ];
+    }
+
     public function requestNotActive() {
         $requestOpenList = CreateRequest::where('requestStatus', 0)->orWhere('requestStatus', 2)->get([
             'id as requestID', 'facilityID', 'requestStatus as status', 'createdDate', 'userID'
