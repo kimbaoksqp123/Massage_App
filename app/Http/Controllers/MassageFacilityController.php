@@ -21,22 +21,39 @@ class MassageFacilityController extends Controller
     public function index()
     {
         // lấy giá tiền của service rẻ nhất và đắt nhất
-        $minPriceAllFacility = ServicePrice::with(['massage_service' => function ($query) {
-            $query->where('isActive', 1);
-        }])->orderBy('price', 'asc')->first()->price;
+        $servicePrices = ServicePrice::with(['massage_service' => function ($query) {
+            $query->with(['massage_facility' => function ($query) {
+                $query->where('isActive', 1);
+            }]);
+        }])->orderBy('price', 'asc')->get();
 
-        $maxPriceAllFacility = ServicePrice::with(['massage_service' => function ($query) {
-            $query->where('isActive', 1);
-        }])->orderBy('price', 'desc')->first()->price;
+        foreach ($servicePrices as $key => $value) {
+            if (empty($value->massage_service->massage_facility))
+                unset($servicePrices[$key]);
+        }
 
-        $MassageFacilities = MassageFacilityResource::collection(MassageFacility::where('isActive', 1)->get());
-        $MassageServices = MassageService::with(['massage_service' => function ($query) {
+        $minPriceAllFacility = $servicePrices->first()->price;    
+        $maxPriceAllFacility = $servicePrices->last()->price;
+
+        // Danh sách toàn bộ cơ sở massage
+        $massageFacilities = MassageFacilityResource::collection(MassageFacility::where('isActive', 1)->get());
+
+        // Danh sách massage service
+        $massageServices = MassageService::with(['massage_facility' => function ($query) {
             $query->where('isActive', 1);
-        }])->select('serviceName')->groupBy('serviceName')->get();
+        }])->get();
+
+        foreach ($massageServices as $key => $value) {
+            if (empty($value->massage_facility)) {
+                unset($massageServices[$key]);
+            }
+        }
+
+        $massageServices->unique('serviceName')->pluck('serviceName')->toArray();
 
         return [
-            'result' => $MassageFacilities,
-            'serviceList' => $MassageServices,
+            'result' => $massageFacilities,
+            'serviceList' => $massageServices,
             'minPrice' => $minPriceAllFacility,
             'maxPrice' => $maxPriceAllFacility,
         ];
