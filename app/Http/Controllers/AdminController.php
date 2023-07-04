@@ -40,44 +40,6 @@ class AdminController extends Controller
         ];
     }
 
-    public function detail($id)
-    {
-        $inforFacility = MassageFacility::where('id', '=', $id)
-            ->get(['id', 'name', 'phoneNumber AS phone', 'location AS address', 'description']);
-
-        //danh sách ảnh của 1 quán
-        $imgList = ImageLibrary::where('facilityID', '=', $id)->pluck('imageURL')->toArray();
-
-        // danh sách staff của quán
-        $staffList = Staff::where('facilityID', $id)->get()->toArray();
-
-        // danh sách các dịch vụ của quán
-        $serviceList = MassageService::where('facilityID', '=', $id)->get(['id', 'serviceName', 'serviceDescription', 'imageURL AS serviceImg']);
-
-        // thêm giá tiền cùng thời gian phục vụ cho từng service
-        foreach ($serviceList as $serviceItem) {
-
-            $servicePriceItem = ServicePrice::where('serviceID', '=', $serviceItem->id)
-                ->get(['serviceID', 'id AS priceID', 'price', 'durationTime AS duration']);
-            $serviceItem['servicePrice'] = $servicePriceItem;
-        }
-
-        // TODO: thêm avatar cho user
-        // thêm rating cho quán
-        $ratingController = new RatingController();
-        $rateList = $ratingController->index($id);
-
-        foreach ($inforFacility as $value) {
-
-            $value['imgList'] = $imgList;
-            $value['serviceList'] = $serviceList;
-            $value['ratingList'] = $rateList['ratingList'];
-            $value['staffList'] = $staffList;
-        }
-
-        return $inforFacility;
-    }
-
     public function requestNotActive() {
         $requestOpenList = CreateRequest::where('requestStatus', 0)->orWhere('requestStatus', 2)->get([
             'id as requestID', 'facilityID', 'requestStatus as status', 'createdDate', 'userID'

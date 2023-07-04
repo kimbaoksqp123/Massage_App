@@ -142,7 +142,7 @@ class MassageFacilityController extends Controller
     // show detail
     public function detail($id)
     {
-        $inforFacility = MassageFacility::where('id', '=', $id)->where('isActive', 1)
+        $inforFacility = MassageFacility::where('id', '=', $id)
             ->get(['id', 'name', 'phoneNumber AS phone', 'location AS address', 'description']);
 
         //danh sách ảnh của 1 quán
