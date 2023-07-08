@@ -19,6 +19,10 @@ class ImageLibraryController extends Controller
             Storage::disk('public_uploads')->makeDirectory($url);
         }
 
+        if (!Storage::disk('s3')->exists($url)) {
+            Storage::disk('s3')->makeDirectory($url);
+        }
+
         if ($req->__isset('imageLibrary')) {
             $imageLibraryFiles = $req->file('imageLibrary');
         }
@@ -27,17 +31,19 @@ class ImageLibraryController extends Controller
 
             $count = 0;
             foreach ($imageLibraryFiles as $file) {
-    
+
                 // Lưu file vào storage
                 $formatFile = $file->getClientOriginalExtension();
                 $file->storeAs($url, $count + 1 . ".$formatFile", 'public_uploads');
-    
+                Storage::disk('s3')->put($url, file_get_contents($file));
+
+
                 // Tạo data để thực hiện câu query
                 $data[] = [
                     'facilityID' => $massageFacility->id,
                     'imageURL' => 'uploads/' . $url . $count + 1 . ".$formatFile",
                 ];
-    
+
                 $count++;
             }
 
