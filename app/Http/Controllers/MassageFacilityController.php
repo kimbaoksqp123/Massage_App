@@ -148,8 +148,17 @@ class MassageFacilityController extends Controller
         //danh sách ảnh của 1 quán
         $imgList = ImageLibrary::where('facilityID', '=', $id)->pluck('imageURL')->toArray();
 
+        foreach ($imgList as $image) {
+            $image = asset($image);
+        }
+
         // danh sách staff của quán
         $staffList = Staff::where('facilityID', $id)->get()->toArray();
+
+        foreach ($staffList as $staff) {
+            $staff['image'] = asset($staff['image']);
+            $staff['certificateImage'] = asset($staff['certificateImage']);
+        }
 
         // danh sách các dịch vụ của quán
         $serviceList = MassageService::where('facilityID', '=', $id)->get(['id', 'serviceName', 'serviceDescription', 'imageURL AS serviceImg']);
@@ -160,6 +169,7 @@ class MassageFacilityController extends Controller
             $servicePriceItem = ServicePrice::where('serviceID', '=', $serviceItem->id)
                 ->get(['serviceID', 'id AS priceID', 'price', 'durationTime AS duration']);
             $serviceItem['servicePrice'] = $servicePriceItem;
+            $serviceItem['image'] = asset($serviceItem['image']);
         }
 
         // TODO: thêm avatar cho user
