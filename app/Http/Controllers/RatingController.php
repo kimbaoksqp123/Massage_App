@@ -31,7 +31,7 @@ class RatingController extends Controller
         // thêm thông tin user
         foreach ($ratings as $rating) {
             $rating['userName'] = $rating->user->username;
-            $rating['userAvatarUrl'] = $rating->user->avatarImageUrl;
+            $rating['userAvatarUrl'] = asset($rating->user->avatarImageUrl);
             unset($rating['userID']);
             unset($rating['user']);
         }
