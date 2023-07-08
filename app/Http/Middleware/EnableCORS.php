@@ -13,7 +13,7 @@ class EnableCORS
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
         return $next($request)
             ->header('Access-Control-Allow-Origin', 'https://fe-codebase.vercel.app')
