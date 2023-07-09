@@ -226,18 +226,18 @@ class MassageFacilityController extends Controller
 
         // return "oke";
 
-        // // lưu service và giá vào bảng massage_services và bảng service_prices
-        // if ($req->__isset('serviceList') && !empty($req->serviceList)) {
+        // lưu service và giá vào bảng massage_services và bảng service_prices
+        if ($req->__isset('serviceList') && !empty($req->serviceList)) {
 
-        //     $services = $req->serviceList;
-        //     foreach ($services as $service) {
-        //         $massageServiceController->store($service, $massageFacility);
-        //     }
-        // }
+            $services = $req->serviceList;
+            foreach ($services as $service) {
+                $massageServiceController->store($service, $massageFacility);
+            }
+        }
 
-        // // tạo create request tương ứng với massage facility hiện tại,
-        // // và lưu vào bảng create_requests
-        // $createRequestController->store($massageFacility->id, $massageFacility->ownerID);
+        // tạo create request tương ứng với massage facility hiện tại,
+        // và lưu vào bảng create_requests
+        $createRequestController->store($massageFacility->id, $massageFacility->ownerID);
 
         // return response('ok');
     }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\MassageService;
 use App\Models\ServicePrice;
+use Illuminate\Support\Facades\Storage;
 
 class MassageServiceController extends Controller
 {
@@ -26,8 +27,8 @@ class MassageServiceController extends Controller
         $fileExtension = $serviceImage->getClientOriginalExtension();
         $fileName = $massageService->id . ".$fileExtension";
 
-        $pathImageS3 = $directory . $fileName;
-        // $serviceImage->storeAs($directory, $fileName, 'public_uploads');
+        $pathImageS3 = 'uploads/' . $directory . $fileName;
+        $serviceImage->storeAs($directory, $fileName, 'public_uploads');
         $path = Storage::disk('s3')->put($pathImageS3, file_get_contents($serviceImage));
         $path = Storage::disk('s3')->url($path);
 
