@@ -169,7 +169,7 @@ class MassageFacilityController extends Controller
             $servicePriceItem = ServicePrice::where('serviceID', '=', $serviceItem->id)
                 ->get(['serviceID', 'id AS priceID', 'price', 'durationTime AS duration']);
             $serviceItem['servicePrice'] = $servicePriceItem;
-            $serviceItem['image'] = asset($serviceItem['image']);
+            $serviceItem['serviceImg'] = asset($serviceItem['serviceImg']);
         }
 
         // TODO: thêm avatar cho user

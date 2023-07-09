@@ -40,7 +40,7 @@ class MassageFacility extends Model
 
         $firstImageLibrary = $this->image_librarys()->first();
         return new CastsAttribute(
-            get: fn () => $firstImageLibrary ? $firstImageLibrary->imageURL : 'img\img_01_01.jpg',
+            get: fn () => $firstImageLibrary ? asset($firstImageLibrary->imageURL) : asset('img\img_01_01.jpg'),
         );
     }
 
