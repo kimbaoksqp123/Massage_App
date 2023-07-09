@@ -1,12 +1,11 @@
-id: 49526
-name: MassageAppBE
+id: 49532
+name: VaporMassageApp
 environments:
   production:
-    storage: massage-app-image
     database: DbMassageApp
     memory: 1024
     cli-memory: 512
-    runtime: "php-8.1:al2"
+    runtime: "php-8.2:al2"
     build:
       - "composer install --no-dev"
       - "php artisan event:cache"

@@ -19,10 +19,6 @@ class ImageLibraryController extends Controller
             Storage::disk('public_uploads')->makeDirectory($url);
         }
 
-        if (!Storage::disk('s3')->exists($url)) {
-            Storage::disk('s3')->makeDirectory($url);
-        }
-
         if ($req->__isset('imageLibrary')) {
             $imageLibraryFiles = $req->file('imageLibrary');
         }
@@ -35,8 +31,10 @@ class ImageLibraryController extends Controller
                 // Lưu file vào storage
                 $formatFile = $file->getClientOriginalExtension();
                 $file->storeAs($url, $count + 1 . ".$formatFile", 'public_uploads');
-                Storage::disk('s3')->put($url, file_get_contents($file));
 
+                $pathImageS3 = 'uploads/' . $url . $count + 1 . ".$formatFile";
+                $path = Storage::disk('s3')->put($pathImageS3, file_get_contents($file));
+                $path = Storage::disk('s3')->url($path);
 
                 // Tạo data để thực hiện câu query
                 $data[] = [

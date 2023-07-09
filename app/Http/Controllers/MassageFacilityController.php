@@ -32,7 +32,7 @@ class MassageFacilityController extends Controller
                 unset($servicePrices[$key]);
         }
 
-        $minPriceAllFacility = $servicePrices->first()->price;    
+        $minPriceAllFacility = $servicePrices->first()->price;
         $maxPriceAllFacility = $servicePrices->last()->price;
 
         // Danh sách toàn bộ cơ sở massage
@@ -224,20 +224,22 @@ class MassageFacilityController extends Controller
             }
         }
 
-        // lưu service và giá vào bảng massage_services và bảng service_prices
-        if ($req->__isset('serviceList') && !empty($req->serviceList)) {
+        // return "oke";
 
-            $services = $req->serviceList;
-            foreach ($services as $service) {
-                $massageServiceController->store($service, $massageFacility);
-            }
-        }
+        // // lưu service và giá vào bảng massage_services và bảng service_prices
+        // if ($req->__isset('serviceList') && !empty($req->serviceList)) {
 
-        // tạo create request tương ứng với massage facility hiện tại,
-        // và lưu vào bảng create_requests
-        $createRequestController->store($massageFacility->id, $massageFacility->ownerID);
+        //     $services = $req->serviceList;
+        //     foreach ($services as $service) {
+        //         $massageServiceController->store($service, $massageFacility);
+        //     }
+        // }
 
-        return response('ok');
+        // // tạo create request tương ứng với massage facility hiện tại,
+        // // và lưu vào bảng create_requests
+        // $createRequestController->store($massageFacility->id, $massageFacility->ownerID);
+
+        // return response('ok');
     }
 
     public function updateAvarageRating($id) {
