@@ -248,28 +248,28 @@ class MassageServiceSeeder extends Seeder
                 'serviceName' => 'OMAMORI マッサージ(オイルなし)',
                 'serviceDescription' => '指先をしっかり使い、 身体を温め、 心と身体を健康へと導くために、 身体のエネルギーと 身体内部を調整していく古代東洋のベトナム 式トリートメントです。',
                 'availabilityStatus' => 1,
-                'imageURL' => 'img/img_service/img_service_05_06.jpg',
+                'imageURL' => 'img/img_service/img_service_01_01.jpg',
             ],
             [ //Hot stone
                 'facilityID' => Arr::random($facilityIds),
                 'serviceName' => 'ホットストーンマッサージ',
                 'serviceDescription' => '温められたアロマストーンにより、緊張を和 らげ、筋肉の硬直を緩和し、 ストレスを軽減 させて深いリラゼーションへと導きます。',
                 'availabilityStatus' => 1,
-                'imageURL' => 'img/img_service/img_service_05_07.jpg',
+                'imageURL' => 'img/img_service/img_service_01_03.jpg',
             ],
             [ //Zen in heart
                 'facilityID' => Arr::random($facilityIds),
                 'serviceName' => '"禅"イン・ザ・ハートトリートメント',
                 'serviceDescription' => '一流のセラピスト達により、 彼らの魔法のよう な手と献身的な心によってあなたに完璧なる体 験をお届けすることができる特別なトリートメ ントです。 セラピストはあなたの身体の状態に 応じて4つの異なる技法を組み合わせ、 あなた をリラクゼーションへと導きます。',
                 'availabilityStatus' => 1,
-                'imageURL' => 'img/img_service/img_service_05_08.jpg',
+                'imageURL' => 'img/img_service/img_service_01_05.jpg',
             ],
             [ //Eternal energy
                 'facilityID' => Arr::random($facilityIds),
                 'serviceName' => 'エターナル・エナジー',
                 'serviceDescription' => '2人の一流のセラピストによりあなたをリラクゼーションの旅へと導きます。 あなたのために選び 調合した当別なオイルを使って、 足の疲労を緩和 することから施術は始ります。 施術には宇宙の第 4元素である、 土・火・水・空気を組み合わせる 技法が用いられ、 あなたの身体全体に完全なる調和をもたらします',
                 'availabilityStatus' => 1,
-                'imageURL' => 'img/img_service/img_service_05_09.jpg',
+                'imageURL' => 'img/img_service/img_service_01_07.jpg',
             ],
         )->create();
     }
