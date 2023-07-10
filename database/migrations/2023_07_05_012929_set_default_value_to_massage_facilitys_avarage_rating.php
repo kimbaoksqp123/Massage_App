@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('massage_facilitys', function (Blueprint $table) {
-            $table->double('averageRating')->default(5.0)->change();
+            $table->double('averageRating')->default(0)->change();
         });
     }
 
