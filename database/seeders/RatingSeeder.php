@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Http\Controllers\MassageFacilityController;
 use App\Models\MassageFacility;
 use App\Models\User;
 use Carbon\Carbon;
@@ -25,7 +26,7 @@ class RatingSeeder extends Seeder
                 'userID' => Arr::random($userIds),
                 'facilityID' => Arr::random(($facilityIds)),
                 'comment' => '素晴らしい！！！ このサービスはすごいですね！！！ プロの対応、 機会があれば間違いなく戻ってきます',
-                'commentVoteup' => 0,
+                'commentVoteup' => rand(1, 5),
                 'created_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
             ],
@@ -33,7 +34,7 @@ class RatingSeeder extends Seeder
                 'userID' => Arr::random($userIds),
                 'facilityID' => Arr::random(($facilityIds)),
                 'comment' => '素晴らしい！！！ このサービスはすごいですね！！！ プロの対応、 機会があれば間違いなく戻ってきます',
-                'commentVoteup' => 0,
+                'commentVoteup' => rand(1, 5),
                 'created_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
             ],
@@ -41,7 +42,7 @@ class RatingSeeder extends Seeder
                 'userID' => Arr::random($userIds),
                 'facilityID' => Arr::random(($facilityIds)),
                 'comment' => '素晴らしい！！！ このサービスはすごいですね！！！ プロの対応、 機会があれば間違いなく戻ってきます',
-                'commentVoteup' => 0,
+                'commentVoteup' => rand(1, 5),
                 'created_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
             ],
@@ -49,7 +50,7 @@ class RatingSeeder extends Seeder
                 'userID' => Arr::random($userIds),
                 'facilityID' => Arr::random(($facilityIds)),
                 'comment' => '素晴らしい！！！ このサービスはすごいですね！！！ プロの対応、 機会があれば間違いなく戻ってきます',
-                'commentVoteup' => 0,
+                'commentVoteup' => rand(1, 5),
                 'created_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
             ],
@@ -57,7 +58,7 @@ class RatingSeeder extends Seeder
                 'userID' => Arr::random($userIds),
                 'facilityID' => Arr::random(($facilityIds)),
                 'comment' => '素晴らしい！！！ このサービスはすごいですね！！！ プロの対応、 機会があれば間違いなく戻ってきます',
-                'commentVoteup' => 0,
+                'commentVoteup' => rand(1, 5),
                 'created_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
             ],
@@ -65,7 +66,7 @@ class RatingSeeder extends Seeder
                 'userID' => Arr::random($userIds),
                 'facilityID' => Arr::random(($facilityIds)),
                 'comment' => '楽しかったし、とてもリラックスできました！受付係のアイビーさんは流暢な日本語を話し、はっきりと話しかけてくれます。マッサージ師さんの態度も技術も素晴らしいです！',
-                'commentVoteup' => 0,
+                'commentVoteup' => rand(1, 5),
                 'created_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
             ],
@@ -73,10 +74,15 @@ class RatingSeeder extends Seeder
                 'userID' => Arr::random($userIds),
                 'facilityID' => Arr::random(($facilityIds)),
                 'comment' => 'セラピストはとても素敵で、よく訓練されています。 ここではリラックスできるカッピングマッサージを楽しんでいます。 サービスはプロフェッショナルです。',
-                'commentVoteup' => 0,
+                'commentVoteup' => rand(1, 5),
                 'created_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
             ],
         ]);
+
+        $massageFacilityController = new MassageFacilityController();
+        foreach ($facilityIds as $facilityId) {
+            $massageFacilityController->updateAvarageRating($facilityId);
+        }
     }
 }
