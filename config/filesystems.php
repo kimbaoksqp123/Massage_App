@@ -48,7 +48,7 @@ return [
             'driver' => 'local',
             'root' => public_path() . '/uploads',
         ],
-        
+
         'staffs' => [
             'driver' => 'local',
             'root' => storage_path('app/public/staffs'),
@@ -66,6 +66,8 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
+            'scheme' => 'http',
+            'visibility' => 'public',
         ],
 
     ],

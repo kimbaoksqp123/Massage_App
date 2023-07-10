@@ -27,17 +27,21 @@ class ImageLibraryController extends Controller
 
             $count = 0;
             foreach ($imageLibraryFiles as $file) {
-    
+
                 // Lưu file vào storage
                 $formatFile = $file->getClientOriginalExtension();
                 $file->storeAs($url, $count + 1 . ".$formatFile", 'public_uploads');
-    
+
+                $pathImageS3 = 'uploads/' . $url . $count + 1 . ".$formatFile";
+                $path = Storage::disk('s3')->put($pathImageS3, file_get_contents($file));
+                $path = Storage::disk('s3')->url($path);
+
                 // Tạo data để thực hiện câu query
                 $data[] = [
                     'facilityID' => $massageFacility->id,
                     'imageURL' => 'uploads/' . $url . $count + 1 . ".$formatFile",
                 ];
-    
+
                 $count++;
             }
 
