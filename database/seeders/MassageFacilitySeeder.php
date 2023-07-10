@@ -8,6 +8,8 @@ use Dflydev\DotAccessData\Data;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\MassageFacility;
+use App\Models\User;
+use Illuminate\Support\Arr;
 
 class MassageFacilitySeeder extends Seeder
 {
@@ -85,9 +87,11 @@ class MassageFacilitySeeder extends Seeder
         //     ],
         // ]);
         //
+        $userIds = User::whereNot('userType', 2)->orderBy('id', 'desc')->limit(5)->pluck('id')->toArray();        
+
         MassageFacility::factory()->count(5)->sequence(
             [
-                'ownerId' => 1,
+                'ownerId' => $userIds[0],
                 'name' => 'Serene Spa',
                 'description' => 'Serene Spa では、天然ハーブ療法と、何世代にもわたって受け継がれてきた古代の伝統を使用し、クライアントが当然のケアと配慮を受けられるようにしています。 スパには、多数のプライベート ルーム、特別なスイート、最新のハイドロ スペシャリストとトリートメント施設が備わっています。 マッサージセラピストによる丁寧なケアをお楽しみください。',
                 'location' => '68 Ma May, Hoan Kiem, Hanoi, Vietnam',
@@ -99,7 +103,7 @@ class MassageFacilitySeeder extends Seeder
             ],
 
             [
-                'ownerId' => 2,
+                'ownerId' => $userIds[1],
                 'name' => 'La Belle Vie Spa',
                 'description' => 'ラベラスパ グループは、東洋の最高の技術とベトナムのハーブのノウハウを調和させたトリートメントで、ユニークなスパ体験を提供します。 私たちの特別なスパでのすべての特別なトリートメントは、これまでにない最高の体験と感覚です。ラベルスパグループで、調和と純粋さの中でリラックスしてください。 プライベートトリートメントルームで最高のサービスをお楽しみください。',
                 'location' => '46B Luong Van Can, Hoan Kiem, Hanoi, Vietnam',
@@ -111,7 +115,7 @@ class MassageFacilitySeeder extends Seeder
             ],
 
             [
-                'ownerId' => 3,
+                'ownerId' => $userIds[2],
                 'name' => "Lessence Spa",
                 'description' => 'レセンススパは、繊細でエレガントで優しい建築の中に静寂が支配する、完全なリラクゼーションのために作られました。',
                 'location' => '36 Dinh Liet, Hoan Kiem, Hanoi, Vietnam',
@@ -123,7 +127,7 @@ class MassageFacilitySeeder extends Seeder
             ],
 
             [
-                'ownerId' => 4,
+                'ownerId' => $userIds[3],
                 'name' => 'LA Spa',
                 'description' => 'ホテル隣のプライベートビル内にあるラ シエスタ スパでは、リラックスしたひとときをお過ごしいただけます。 6 室のトリートメント ルームと、サウナやハーブバスなどのさまざまなトリートメントを備えており、どなたにもご満足いただけるものをご用意しております。',
                 'location' => '94 P. Ma May, Hang Buom, Hoan Kiem, Hanoi, Vietnam',
@@ -134,7 +138,7 @@ class MassageFacilitySeeder extends Seeder
                 'isActive' => 1,
             ],
             [
-                'ownerId' => 5,
+                'ownerId' => $userIds[4],
                 'name' => 'Omamori Spa Ha Noi',
                 'description' => 'オマモリ スパは、2013 年に設立されたブラインドリンクによって設立および運営されているマッサージ センターのチェーンです。ブラインドリンクは、ベトナムの視覚障害者コミュニティ全般にウェルネスの分野でトレーニングの機会を提供する、社会的影響を与える先駆的な組織です。 BlindLink の目的は、この価値ある市民のグループにより良い生活水準とより高い自尊心を生み出すことです。',
                 'location' => '48 Ngo Huyen , Old Quarter , Ha Noi , Vietnam',

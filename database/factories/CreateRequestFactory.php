@@ -19,7 +19,7 @@ class CreateRequestFactory extends Factory
     public function definition(): array
     {
         $facilityIds = MassageFacility::all()->pluck('id')->toArray();
-        $userIds = User::whereNot('id', 1)->pluck('id')->toArray();
+        $userIds = User::whereNot('userType', 2)->pluck('id')->toArray();
         return [
             'createdDate' => Carbon::now()->format('Y-m-d'),
         ];
