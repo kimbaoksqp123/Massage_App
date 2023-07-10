@@ -28,7 +28,7 @@ class MassageFacilitySeeder extends Seeder
         //         'phoneNumber' => '+84 916362368',
         //         'emailAddress' => 'info@serenespa.vn',
         //         'capacity' => 100,
-        //         'averageRating' => 4.5,
+        //    
         //         // 'created_at' => '1/2/3',
         //         // // 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         //         'isActive' => 1,
@@ -43,7 +43,7 @@ class MassageFacilitySeeder extends Seeder
         //         'phoneNumber' => '+84 2466869163',
         //         'emailAddress' => 'hanoilabelleviespa@gmail.com',
         //         'capacity' => 100,
-        //         'averageRating' => 4.9,
+        //    
         //         'isActive' => 1,
         //     ],
 
@@ -56,7 +56,7 @@ class MassageFacilitySeeder extends Seeder
         //         'phoneNumber' => '+84 978392399',
         //         'emailAddress' => 'booking@lessencespacom',
         //         'capacity' => 50,
-        //         'averageRating' => 5,
+        //    
         //         'isActive' => 1,
         //     ],
 
@@ -69,7 +69,7 @@ class MassageFacilitySeeder extends Seeder
         //         'phoneNumber' => '+84 2835354461',
         //         'emailAddress' => 'mamay@laspas.vn',
         //         'capacity' => 60,
-        //         'averageRating' => 4.9,
+        //    
         //         'isActive' => 1,
         //     ],
 
@@ -82,7 +82,7 @@ class MassageFacilitySeeder extends Seeder
         //         'phoneNumber' => '+84 969825494',
         //         'emailAddress' => 'booking@omamorispa.com',
         //         'capacity' => 100,
-        //         'averageRating' => 4.8,
+        //    
         //         'isActive' => 1,
         //     ],
         // ]);
@@ -98,7 +98,6 @@ class MassageFacilitySeeder extends Seeder
                 'phoneNumber' => '+84 916362368',
                 'emailAddress' => 'info@serenespa.vn',
                 'capacity' => 100,
-                'averageRating' => 4.5,
                 'isActive' => 1,
             ],
 
@@ -110,7 +109,6 @@ class MassageFacilitySeeder extends Seeder
                 'phoneNumber' => '+84 2466869163',
                 'emailAddress' => 'hanoilabelleviespa@gmail.com',
                 'capacity' => 100,
-                'averageRating' => 4.9,
                 'isActive' => 1,
             ],
 
@@ -122,7 +120,6 @@ class MassageFacilitySeeder extends Seeder
                 'phoneNumber' => '+84 978392399',
                 'emailAddress' => 'booking@lessencespacom',
                 'capacity' => 50,
-                'averageRating' => 5,
                 'isActive' => 1,
             ],
 
@@ -134,7 +131,6 @@ class MassageFacilitySeeder extends Seeder
                 'phoneNumber' => '+84 2835354461',
                 'emailAddress' => 'mamay@laspas.vn',
                 'capacity' => 60,
-                'averageRating' => 4.9,
                 'isActive' => 1,
             ],
             [
@@ -145,7 +141,6 @@ class MassageFacilitySeeder extends Seeder
                 'phoneNumber' => '+84 969825494',
                 'emailAddress' => 'booking@omamorispa.com',
                 'capacity' => 100,
-                'averageRating' => 4.8,
                 'isActive' => 1,
             ],
         )->create();

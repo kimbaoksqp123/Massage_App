@@ -246,8 +246,10 @@ class MassageFacilityController extends Controller
 
         $commentVoteups = Rating::where('facilityID', $id)->pluck('commentVoteup')->toArray();
 
-        $facility = MassageFacility::find($id);
-        $facility->averageRating = round(array_sum($commentVoteups) / count($commentVoteups), 1);
-        $facility->save();
+        if (count($commentVoteups)) {
+            $facility = MassageFacility::find($id);
+            $facility->averageRating = round(array_sum($commentVoteups) / count($commentVoteups), 1);
+            $facility->save();
+        }
     }
 }
